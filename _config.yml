@@ -1,21 +1,41 @@
 menu:
-    Blog: /
-    GitHub: https://github.com/claymcleod
-    Archive: archives/
-    Feed: atom.xml
+    博客: /
+    关于: /about/
+    归档: /archives/
+    标签: /tags/
+    GitHub: https://github.com/cytrogen
+    RSS: /atom.xml
 
 favicon: favicon.png
 logo: favicon.png
 
 # Comment
-# e.g disqus: claymcleod 
-disqus:
+#disqus: cytrogen
 
-# Analytics
-# ga: UA-xxxxxxxx-x
+# Google Analytics
+#ga:
 
 # Copyright Infomation
-startyear: 2019
+startyear: 2024
 
 # Image Credits
-enable_image_credit: true 
+enable_image_credit: false
+
+# Friend Links
+#friend_links:
+
+# FontAwesome
+#fas:
+
+# hexo-renderer-markdown-it-plus
+math:
+    every_page: false
+    mathjax:
+        enable: true
+        tags: none
+    katex:
+        enable: false
+        copy_tex: false
+
+# hexo-generator-feed
+rss: /atom.xml
