@@ -11,3 +11,35 @@ if ga
         | function gtag(){dataLayer.push(arguments);}
         | gtag('js', new Date());
         | gtag('config', '#{ga}');
+
+//- Local Search
+if config.search
+    script(src="/js/search.js")
+
+    script.
+        document.getElementById('search-icon').addEventListener('click', function(event) {
+            const popup = document.getElementById('search-popup');
+            if (popup.classList.contains('hidden')) {
+                popup.classList.remove('hidden');
+            } else {
+                popup.classList.add('hidden');
+            }
+            event.stopPropagation();
+        });
+        document.getElementById('search-popup').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+        document.addEventListener('click', function() {
+            const popup = document.getElementById('search-popup');
+            if (!popup.classList.contains('hidden')) {
+                popup.classList.add('hidden');
+            }
+        });
+
+    script.
+        let search_path = "#{config.search.path}";
+        if (search_path.length === 0) {
+            search_path = "search.xml";
+        }
+        const path = "#{config.root}" + search_path;
+        searchFunc(path, 'local-search-input', 'local-search-results');

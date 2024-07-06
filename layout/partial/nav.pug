@@ -6,3 +6,11 @@ ul.nav.nav-list
             - var act = !re.test(value) && "/"+page.current_url === value
             a.nav-list-link(class={active: act} href=url_for(value) target=tar)
                 != key.toUpperCase()
+
+    if config.search
+        li.nav-list-item#search-icon
+            i.fas.fa-search
+        div#search-popup.hidden
+            div#search-panel
+                input(type="text", id="local-search-input", name="q", results="0", placeholder=__('搜索...'))
+                div#local-search-results
