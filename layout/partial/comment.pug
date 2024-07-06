@@ -2,9 +2,6 @@ if theme.disqus
     #disqus_thread
     script.
         const disqus_shortname = '#{theme.disqus}';
-        var disqus_identifier = '#{page.path}';
-        var disqus_title = '#{page.title}';
-        var disqus_url = '#{config.url}/#{page.path}';
         (function() {
             const dsq = document.createElement('script');
             dsq.type = 'text/javascript'; dsq.async = true;
