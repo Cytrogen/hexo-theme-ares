@@ -1,79 +1,146 @@
-# Table of Contents <!-- omit in toc -->
+# 目录 <!-- omit in toc -->
 
-- [Meta Descriptions](#meta-descriptions)
-- [Titles](#titles)
-- [Displaying Post Previews](#displaying-post-previews)
-- [Comments](#comments)
-- [Danger Block](#danger-block)
-- [Archives](#archives)
+- [元描述](#元描述)
+- [标题](#标题)
+- [显示帖子预览](#显示帖子预览)
+- [评论](#评论)
+- [警告块](#警告块)
+- [归档](#归档)
+- [标签](#标签)
+- [网站图标](#网站图标)
+- [友情链接](#友情链接)
+- [Google Analytics](#google-analytics)
+- [本地搜索](#本地搜索)
 
-## Meta Descriptions
+## 元描述
 
-If you want to set meta description information, please set `desc` property and value to each post — the better method is setting default `desc` property to your scaffolds files, just like:
+如果要设置元描述信息，请为每篇文章设置 `desc` 属性和值。更好的方法是在脚手架文件中设置默认的 `desc` 属性，就像这样：
 
 ```md
-title: Lorem ipsum dolor
-date: 2015-12-31 14:49:13
-desc: Lorem ipsum dolor sit amet, consectetur.
+---
+title: 测试
+date: 2024-04-01 00:00:00
+desc: 巴拉巴拉巴拉。
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, non numquam saepe ex ut. Deleniti culpa inventore consectetur nam saepe!
+巴拉巴拉巴拉巴拉巴拉巴拉。
 ```
 
-result:
+生成结果：
 
 ```html
-<meta name="description" content="Lorem ipsum dolor sit amet, consectetur.">
+<meta name="description" content="巴拉巴拉巴拉。">
 ```
 
-If there is no `desc` property or value, hexo-theme-hermes will use `page.title` and `page.author` instead of it. 
+如果没有 `desc` 属性或值，Hexo-Theme-Ares 将使用 `page.title` 和 `page.author` 代替。
 
-## Titles
+## 标题
 
-`hexo-theme-hermes` supports two kinds of titles:
+Hexo-Theme-Ares 支持三种标题：
 
-* `h1` through `h3` elements are treated the same as "large" titles.
-* `h4` through `h6` elements are treated the same as "small" titles.
+- `h1` 为大标题
+- `h2` 和 `h3` 为中标题
+- `h4` 到 `h6` 都是小标题
 
-The idea is to keep the structure of the blog post simple and readable rather than nesting multiple layers and distracting from the content. The original author of the `hexo-theme-apollo` theme was the individual that made that decision, and I have inherited it here.
+这样做的目的是保持博文结构的简洁性和可读性，而不是嵌套多个层次，分散对内容的注意力。
 
-## Displaying Post Previews 
+## 显示帖子预览
 
-If you wish to include some text as a preview of the article on the blog index, you can include the `<!-- more -->` statement. All content before the `<!-- more -->` statement will be parsed and shown in your index.
+如果希望在博客索引中包含一些文章预览文本，可以包含 `<!-- more -->` 语句。在 `<!-- more -->` 语句之前的所有内容都将被解析并显示在索引中。
 
-If you want to show excerpt(core content of article) to your visitors, do add HTML comment tag `<!--more-->` before else content，and finally the tag will be parsed to be a variable which represents post excerpt by Hexo:
+如果您想向访客显示摘录（文章的核心内容），请在其他内容之前添加 HTML 注释标记 `<!-- more -->`，最后该标记将被 Hexo 解析为代表文章摘录的变量：
 
-![Adding an preview in your post text](images/excerpt-vim.png)
-![How the preview looks in the browser](images/excerpt-browser.png)
+## 评论
 
-## Comments
-
-Hexo-theme-hermes supports comment plugins for Disqus. please set like this in your `themes/hermes/_config.yml`:
+Hexo-Theme-Ares 支持 Disqus 评论插件。请在 `themes/ares/_config.yml` 中这样设置：
 
 ```yaml
-disqus: claymcleod
+disqus: 你的 Website Name
 ```
 
-## Danger Block
+## 警告块
 
-Use html tag with special class property to render block:
+使用带有特殊类属性的 HTML 标签来呈现块：
 
 ```html
 <div class="danger">
-This is an example danger message!
+
+这是一个例子！		
+		
 </div>
 ```
 
-![Danger message example](images/danger-message-browser.png)
+## 归档
 
-## Archives
-
-You can modify the `/archives/` section of the site by included any of the [hexo-generator-archive](https://github.com/hexojs/hexo-generator-archive) options to your `_config.yml` file under `theme`.
+你可以在根目录下的 `_config.yml` 文件中加入任何 [Hexo-Generator-Archive](https://github.com/hexojs/hexo-generator-archive) 选项来修改网站的 `/archives` 页面。
 
 ```
 archive_generator:
-    per_page: 0
-    yearly: false
-    monthly: false
-    daily: false
+  enabled: true
+  per_page: 25
+  yearly: true
+  monthly: true
+  daily: true
+  order_by: -date
+```
+
+## 标签
+
+你可以在根目录下的 `_config.yml` 文件中加入任何 [Hexo-Generator-Tag](https://github.com/hexojs/hexo-generator-tag) 选项来修改网站的 `/tags` 页面。
+
+```
+tag_generator:
+  per_page: 15
+  order_by: -asc
+  enable_index_page: tag-index
+```
+
+在 `themes/source` 目录下新建 `tags/index.md` 即可自动生成 `/tags` 页面。不带有 `tags` 属性的文章不会出现在 `/tags` 页面。
+
+```md
+---
+title: 测试
+date: 2024-04-01 00:00:00
+tags:
+  - 巴拉巴拉
+---
+```
+
+## 网站图标
+
+在 `themes/source` 目录中找到 `favicon.png`，将你想要使用的图片重命名为 `favicon.png` 并顶替掉原有的图片。图片必须是 `256 * 256` 的。
+
+## 友情链接
+
+在 `themes/ares/_config.yml` 中这样添加友情链接：
+
+```yaml
+friend_links:
+    - name: 测试
+      url: https://example.com
+      description: 巴拉巴拉巴拉
+```
+
+## Google Analytics
+
+在 `themes/ares/_config.yml` 中添加 `ga` 设置项来启动 Google Analytics：
+
+```yaml
+ga: G-xxxxxx
+```
+
+## 本地搜索
+
+安装依赖项 Hexo-Generator-Search：
+
+```bash
+npm install --save hexo-generator-search
+```
+
+将 `search/search.xml` 移动至项目根目录（只需要移动 `search.xml`，不需要移动 `search` 目录）。
+
+添加 `fas` 设置项，填入注册好的 FontAwesome Kit 名（使用免费版即可）：
+
+```yaml
+fas: xxxxxxxxxx
 ```

@@ -1,61 +1,40 @@
-# Hexo Theme Hermes
+# Hexo Theme Ares
 
-![Hello Hermes!](docs/images/hermes-hello-world.png)
+## 开始使用
 
-## Getting Started
+运行以下命令即可快速启动并运行这个 Hexo 主题：
 
-You can get up and running quickly with this hexo theme by running the following commands
+> Windows 用户推荐使用 Git Bash。
 
 ```bash
-# Generate new blog
+# 初始化博客项目
 hexo init blog
 cd blog
 
-# Install Hermes theme
-git clone https://github.com/claymcleod/hexo-theme-hermes.git themes/hermes
-sed -i.bak "s/theme: landscape/theme: hermes/g" _config.yml && rm _config.yml.bak
+# 安装 Ares 主题
+git clone https://github.com/cytrogen/hexo-theme-ares.git themes/ares
+sed -i.bak "s/theme: landscape/theme: ares/g" _config.yml && rm _config.landscape.yml
 rm -r themes/landscape
 
-# Install required plugins
-npm i hexo-renderer-pug --save
+# 安装依赖项
+npm install --save hexo-renderer-pug
 
-# Install recommended plugins
-npm i hexo-generator-feed \
-      hexo-generator-feed \
-      hexo-generator-sitemap \
-      hexo-browsersync \
-      hexo-generator-archive \
-      --save
+# 安装插件
+npm install --save hexo-generator-feed hexo-generator-sitemap hexo-browsersync
+npm uninstall --save hexo-renderer-marked && npm install --save hexo-renderer-markdown-it-plus
 
-# Set some nice-to-have configuration options
-sed -i.bak 's/relative_link: false/relative_link: true/g' _config.yml && rm _config.yml.bak
-
-# Start the hexo server
+# 启动 Hexo server
 hexo server
 ```
-To update your copy of the theme at any time, simply do
 
-```bash
-cd themes/hermes
-git pull
-```
+## 文档
 
-## Documentation
+您可以在 `docs/` 文件夹中找到相关文档。具体来说，您可能会对以下方面的文档感兴趣：
 
-You can find relevant documentation in the `docs/` folder. Specifically, you might be interested in docs on:
+* [配置项](docs/configuration.md)
 
-* [Configuration](docs/configuration.md)
+## 作者与鸣谢
 
-## Contributing
+本主题是从 [Hexo-Theme-Hermes](https://github.com/claymcleod/hexo-theme-hermes) fork 而来，并进行了适度修改。
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## Authors and Acknowledgments
-
-This theme was forked and modified moderately from [pinggod's](https://github.com/pinggod) [hexo-theme-apollo](https://github.com/pinggod/hexo-theme-apollo) repo. I owe them a lot of credit for creating the foundation for this theme.
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+[Hexo-Theme-Apollo](https://github.com/sun4cs/hexo-theme-apollo) 则是这一切的基础。他们为本主题打下了坚实的基础，对此我功不可没。
