@@ -48,3 +48,30 @@ mixin post(item)
             +postInfo(item)
             .post-content
                 != item.content
+
+mixin taggedPosts()
+    .archive
+        - const tags = {};
+        - page.posts.each(function (item) {
+            - item.tags.data.forEach(function (tag) {
+                - if (!tags[tag.name]) {
+                    - tags[tag.name] = [];
+                - }
+                - const alreadyAdded = tags[tag.name].some(function (existingItem) {
+                    - return existingItem._id === item._id;
+                - });
+                - if (!alreadyAdded) {
+                    - tags[tag.name].push(item);
+                - }
+            - });
+        - });
+
+        - for (let tag in tags) {
+            h3.archive-title!= tag
+            - tags[tag].forEach(function (item) {
+                .post-item
+                    +postInfo(item)
+                    a.post-title-link(href= url_for(item.path))
+                        != item.title
+            - });
+        - }
