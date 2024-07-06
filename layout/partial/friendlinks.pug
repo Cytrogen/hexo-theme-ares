@@ -1,0 +1,7 @@
+section.friend-links
+    h2 友情链接
+    ul
+        each link in theme.friend_links
+            li
+                a(href=link.url) #{link.name}
+                span ：#{link.description}
