@@ -1,5 +1,7 @@
 # Hexo Theme Ares
 
+![](source/favicon.png)
+
 ## 开始使用
 
 运行以下命令即可快速启动并运行这个 Hexo 主题：
