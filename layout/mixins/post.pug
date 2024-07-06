@@ -1,11 +1,9 @@
 mixin postInfo(item)
     .post-info
-        != full_date(item.date, 'll')
+        != full_date(item.date, 'l')
         if item.from && (is_home() || is_post())
             a.post-from(href=item.from target="_blank" title=item.from)!= __('translated')
 
-
-//- Index Page
 mixin posts()
     ul.home.post-list
         - page.posts.each(function (item) {
@@ -24,16 +22,16 @@ mixin posts()
                             != item.content
         - })
 
-//- Archive Page
+
 mixin postList()
     .archive
-        - var year = 0;
-        - var change = false;
+        - let year = 0;
+        - let change = false;
         - page.posts.each(function (item) {
-            - var itemYear = date(item.date, 'YYYY') - 0;
+            - const itemYear = date(item.date, 'YYYY') - 0;
             - change = year !== itemYear;
             - year = change ? itemYear : year;
-            if change 
+            if change
                 h2.archive-year!= year
             .post-item
                 +postInfo(item)
@@ -41,7 +39,7 @@ mixin postList()
                     != item.title
         - })
 
-//- Post Page
+
 mixin post(item)
     .post
         article.post-block
