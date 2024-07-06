@@ -14,4 +14,12 @@ link(rel="stylesheet", href=url_for("css/ares.css"))
 
 - const xml = config.url + '/atom.xml';
 link(rel="search", type="application/opensearchdescription+xml", href=xml, title=config.title)
-    
+
+- const fas = theme.fas;
+- const crossorigin = "anonymous";
+script(src=`https://kit.fontawesome.com/${fas}.js`, crossorigin=crossorigin)
+script(
+    src='https://code.jquery.com/jquery-3.7.1.min.js',
+    integrity='sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=',
+    crossorigin=crossorigin
+)
