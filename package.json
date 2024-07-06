@@ -1,26 +1,26 @@
 {
-  "name": "hexo-theme-hermes",
+  "name": "hexo-theme-ares",
   "version": "1.0.0",
-  "description": "A hexo theme inspired by vuejs.org",
+  "description": "A hexo theme based on hexo-theme-hermes and hexo-theme-apollo",
   "main": "index.js",
   "scripts": {
     "sass": "gulp sass"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/claymcleod/hexo-theme-hermes"
+    "url": "https://github.com/cytrogen/hexo-theme-ares"
   },
   "keywords": [
     "hexo",
     "theme",
-    "hermes"
+    "ares"
   ],
-  "author": "Sean Sun",
+  "author": "Cytrogen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/claymcleod/hexo-theme-hermes/issues"
+    "url": "https://github.com/cytrogen/hexo-theme-ares/issues"
   },
-  "homepage": "https://github.com/claymcleod/hexo-theme-hermes#readme",
+  "homepage": "https://github.com/cytrogen/hexo-theme-ares#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
