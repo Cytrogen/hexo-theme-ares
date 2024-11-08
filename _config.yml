@@ -1,6 +1,6 @@
 menu:
     博客: /
-    关于: /about/
+    # 关于: /about/
     归档: /archives/
     标签: /tags/
     GitHub: https://github.com/cytrogen

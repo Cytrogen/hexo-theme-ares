@@ -2,6 +2,10 @@
 
 ![](source/favicon.png)
 
+## DEMO
+
+[点击这里查看。](https://hexo-theme-ares-demo.netlify.app/)
+
 ## 开始使用
 
 运行以下命令即可快速启动并运行这个 Hexo 主题：
@@ -33,7 +37,8 @@ hexo server
 
 您可以在 `docs/` 目录中找到相关文档。具体来说，您可能会对以下方面的文档感兴趣：
 
-* [配置项](docs/configuration.md)
+- [使用说明](docs/guide.md)
+- [配置项](docs/configuration.md)
 
 ## TODO
 
@@ -51,7 +56,7 @@ hexo server
   - [ ] Mermaid 图
   - [ ] FontAwesome 不需要用户另外注册 Kit
   - [ ] 图片懒加载
-- [ ] 主题 DEMO
+- [x] 主题 DEMO
 
 ## 作者与鸣谢
 
