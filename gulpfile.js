@@ -1,17 +1,25 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css');
+const rename = require('gulp-rename');
 
-// 一次性编译 Sass 
-gulp.task('sass', function() {
+function compileSass() {
     return gulp.src('./source/scss/*.scss')
-        .pipe(sass({outputStyle: 'compressed'}))
+        .pipe(sass({
+            outputStyle: 'expanded'
+        }).on('error', sass.logError))
         .pipe(autoprefixer())
+        .pipe(gulp.dest('./source/css'))
+        .pipe(cleanCSS())
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./source/css'));
-});
+}
 
-// 实时编译
-gulp.task('default', gulp.series('sass', function() {
-    gulp.watch('./source/scss/_partial/*.scss', gulp.series('sass'));
-    gulp.watch('./source/scss/*.scss', gulp.series('sass'));
-}));
+function watchFiles() {
+    gulp.watch(['./source/scss/**/*.scss'], compileSass);
+}
+
+exports.sass = compileSass;
+exports.watch = watchFiles;
+exports.default = gulp.series(compileSass, watchFiles);

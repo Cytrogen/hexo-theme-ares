@@ -1,0 +1,121 @@
+@use "../variables" as *;
+
+.highlight {
+    position: relative;
+    margin: 1em 0;
+    border-radius: $border-radius;
+    line-height: 1.1em;
+    background-color: $light-gray;
+    overflow-x: auto;
+  
+    table, tr, td {
+      width: 100%;
+      border-collapse: collapse;
+      padding: 0;
+      margin: 0;
+    }
+  
+    .gutter {
+      display: none;
+    }
+  
+    .code {
+      pre {
+        padding: 1.2em 1.4em;
+        line-height: 1.5em;
+        margin: 0;
+  
+        .line {
+          width: auto;
+          height: 18px;
+        }
+      }
+  
+      // 语言标记
+      @each $lang in (html, js, bash, css, scss, diff, java, xml, python, json, swift, ruby, perl, php, c, cpp, ts) {
+        &:after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: #ccc;
+          text-align: right;
+          font-size: $code-font-size;
+          padding: 5px 10px 0;
+          line-height: 15px;
+          height: 15px;
+          font-weight: 600;
+        }
+      }
+  
+      &:after {
+        content: attr(data-lang);
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  pre {
+    color: $dark-gray;
+  
+    .function .keyword,
+    .constant { color: #0092db; }
+    .keyword,
+    .attribute { color: $code-color; }
+    .number,
+    .literal { color: #ae81ff; }
+    .tag,
+    .tag .title,
+    .change,
+    .winutils,
+    .flow,
+    .lisp .title,
+    .clojure .built_in,
+    .nginx .title,
+    .tex .special { color: #2973b7; }
+    .symbol,
+    .symbol .string,
+    .value,
+    .regexp { color: $primary-color; }
+    .title { color: #83B917; }
+    .tag .value,
+    .string,
+    .subst,
+    .haskell .type,
+    .preprocessor,
+    .ruby .class .parent,
+    .built_in,
+    .sql .aggregate,
+    .django .template_tag,
+    .django .variable,
+    .smalltalk .class,
+    .javadoc,
+    .django .filter .argument,
+    .smalltalk .localvars,
+    .smalltalk .array,
+    .attr_selector,
+    .pseudo,
+    .addition,
+    .stream,
+    .envvar,
+    .apache .tag,
+    .apache .cbracket,
+    .tex .command,
+    .prompt { color: $primary-color; }
+    .comment,
+    .java .annotation,
+    .python .decorator,
+    .template_comment,
+    .pi,
+    .doctype,
+    .shebang,
+    .apache .sqbracket,
+    .tex .formula { color: #b3b3b3; }
+    .deletion { color: #BA4545; }
+    .coffeescript .javascript,
+    .javascript .xml,
+    .tex .formula,
+    .xml .javascript,
+    .xml .vbscript,
+    .xml .css,
+    .xml .cdata { opacity: 0.5; }
+  }

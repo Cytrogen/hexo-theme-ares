@@ -1,0 +1,101 @@
+@use "sass:color";
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.site-nav {
+  @include flex(column, flex-start, flex-end);
+  width: auto;
+
+  .nav-section {
+    .nav-list {
+      @include flex(row, flex-start, center);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &-item {
+        padding-bottom: 0;
+        display: inline-block;
+
+        a {
+          display: inline-flex;
+          align-items: center;
+          color: $text-color;
+          text-decoration: none;
+          font-size: $nav-font-size;
+          line-height: 1.4;
+          transition: all $transition-duration $transition-timing;
+
+          &:hover, &.active {
+            color: $primary-color;
+            border-bottom: 2px solid $primary-color;
+          }
+
+          .fas {
+            margin-left: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.language-menu {
+  position: relative;
+  display: inline-block;
+  font-size: $nav-font-size;
+
+  .language-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: $text-color;
+      
+      i {
+          font-size: $nav-font-size;
+      }
+  }
+
+  .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: $background-color;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      min-width: 80px;
+      z-index: $z-index-dropdown;
+      display: flex;
+      align-items: center;
+
+      .language-option {
+          display: block;
+          padding: 0.5rem 1rem;
+          color: $text-color;
+          text-decoration: none;
+          transition: background-color $transition-duration $transition-timing;
+
+          &:hover {
+              background-color: color.adjust($light-gray, $lightness: -5%);
+          }
+      }
+  }
+}
+
+@include mobile {
+  .site-nav {
+    align-items: center;
+    width: 100%;
+
+    .nav-section {
+      .nav-list {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
