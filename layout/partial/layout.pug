@@ -1,5 +1,5 @@
 doctype
-html(lang=config.language)
+html(lang=page.lang || config.language[0])
     head
         include head
     body
@@ -14,3 +14,4 @@ html(lang=config.language)
                 block pagination
                 block copyright
         include scripts
+        include search
