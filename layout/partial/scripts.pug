@@ -2,7 +2,7 @@
 script(async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous")
 
 //- Analytics tracking
--  const ga = theme.ga;
+- var ga = theme.ga
 if ga
     <!-- Global site tag (gtag.js) - Google Analytics -->
     script(async, src='https://www.googletagmanager.com/gtag/js?id=' + ga)
@@ -12,34 +12,45 @@ if ga
         | gtag('js', new Date());
         | gtag('config', '#{ga}');
 
-//- Local Search
+//- Local search
 if config.search
-    script(src="/js/search.js")
-
+    script(src=url_for('/js/search.js'))
     script.
-        document.getElementById('search-icon').addEventListener('click', function(event) {
-            const popup = document.getElementById('search-popup');
-            if (popup.classList.contains('hidden')) {
-                popup.classList.remove('hidden');
-            } else {
-                popup.classList.add('hidden');
-            }
-            event.stopPropagation();
-        });
-        document.getElementById('search-popup').addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-        document.addEventListener('click', function() {
-            const popup = document.getElementById('search-popup');
-            if (!popup.classList.contains('hidden')) {
-                popup.classList.add('hidden');
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchPopup = document.getElementById('search-popup');
+            const searchInput = document.getElementById('local-search-input');
+
+            if (searchBtn && searchPopup && searchInput) {
+                searchBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    searchPopup.classList.remove('hidden');
+                    searchInput.focus();
+                });
+
+                searchPopup.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+
+                document.addEventListener('click', function() {
+                    searchPopup.classList.add('hidden');
+                });
+
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        searchPopup.classList.add('hidden');
+                    }
+                });
+
+                let search_path = "#{config.search.path}";
+                if (search_path.length === 0) {
+                    search_path = "search.xml";
+                }
+                const path = "#{config.root}" + search_path;
+                searchFunc(path, 'local-search-input', 'local-search-result');
             }
         });
 
-    script.
-        let search_path = "#{config.search.path}";
-        if (search_path.length === 0) {
-            search_path = "search.xml";
-        }
-        const path = "#{config.root}" + search_path;
-        searchFunc(path, 'local-search-input', 'local-search-results');
+//- Language switch
+if config.language
+    script(src=url_for("/js/language-switch.js"))

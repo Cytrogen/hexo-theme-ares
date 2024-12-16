@@ -1,16 +1,27 @@
-ul.nav.nav-list
-    each value, key in theme.menu
-        li.nav-list-item
-            - var re = /^(http|https):\/\/*/gi;
-            - var tar = re.test(value) ? "_blank" : "_self"
-            - var act = !re.test(value) && "/"+page.current_url === value
-            a.nav-list-link(class={active: act} href=url_for(value) target=tar)
-                != key.toUpperCase()
+include mixins/nav
 
-    if config.search
-        li.nav-list-item#search-icon
-            i.fas.fa-search
-        div#search-popup.hidden
-            div#search-panel
-                input(type="text", id="local-search-input", name="q", results="0", placeholder=__('搜索...'))
-                div#local-search-results
+nav.site-nav
+    .nav-section.page-nav
+        ul.nav-list
+            each item in theme.nav.pages
+                li.nav-list-item
+                    - var path = theme.menu[item];
+                    +internal-link(path, item)
+
+    .nav-section.external-nav
+        ul.nav-list
+            each item in theme.nav.external
+                li.nav-list-item
+                    - var path = theme.menu[item];
+                    +external-link(path, item)
+
+    .nav-section.utility-nav
+        ul.nav-list
+            each item in theme.nav.utility
+                li.nav-list-item
+                    case item
+                        when 'languages'
+                            +language-switcher()
+                        when 'search'
+                            if config.search
+                                +search-box()

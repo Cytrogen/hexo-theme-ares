@@ -1,0 +1,27 @@
+mixin internal-link(path, key)
+    - var fullPath = page.lang === theme.default_lang ? path : `/${page.lang}${path}`;
+    - var act = "/" + page.current_url === fullPath;
+    a.nav-list-link(class={active: act} href=url_for(fullPath))
+        != __(`menu.${key}`)
+
+mixin external-link(path, key)
+    a.nav-list-link(href=path target="_blank")
+        != __(`menu.${key}`)
+        i.fas.fa-external-link-alt
+
+mixin language-switcher()
+    .language-menu
+        button.language-toggle(type="button")
+            i.fas.fa-globe
+            span!= __('nav.current_language')
+        .language-dropdown.hidden
+            each lang in theme.languages || ['zh', 'en']
+                if lang !== page.lang
+                    - var targetPath = page.canonical_path.split('/').slice(page.lang === theme.default_lang ? 0 : 1).join('/')
+                    - var switchPath = lang === theme.default_lang ? `/${targetPath}` : `/${lang}/${targetPath}`
+                    a.language-option(href=url_for(switchPath.replace(/\/+$/, '')))
+                        != __('nav.languages.' + lang)
+
+mixin search-box()
+    button#search-btn.nav-list-link(type="button", aria-label="Search")
+        i.fas.fa-search
