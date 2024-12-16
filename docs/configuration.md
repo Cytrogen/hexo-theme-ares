@@ -1,77 +1,171 @@
-# 目录 <!-- omit in toc -->
+# 配置项
 
-- [关于页面](#关于页面)
-- [归档页面](#归档页面)
-- [标签页面](#标签页面)
-- [评论](#评论)
-- [友情链接](#友情链接)
-- [Google Analytics](#google-analytics)
-- [本地搜索](#本地搜索)
+## 目录 <!-- omit in toc -->
 
-> Hexo 的配置文件有两个：
+- [配置项](#配置项)
+  - [菜单](#菜单)
+  - [i18n](#i18n)
+  - [评论](#评论)
+  - [友情链接](#友情链接)
+  - [Google Analytics](#google-analytics)
+  - [本地搜索](#本地搜索)
+
+> 首先你要清楚，Hexo 的配置文件有**两个**：
 > 
 > - Hexo 配置文件，位于根目录正下方的 `_config.yml`
 > - 主题配置文件，位于 `themes/ares` 目录内的 `_config.yml`
 
-## 关于页面
+## 菜单
 
-在主题配置文件内，将 `关于` 的注释去掉：
+在主题配置文件中你可以自由配置菜单栏的内容：
 
 ```yaml
+# 菜单配置列表，定义了各个页面的访问路径：
 menu:
-  博客: /
-  关于: /about/
-  归档: /archives/
-  标签: /tags/
-  GitHub: https://github.com/cytrogen
-  RSS: /atom.xml
+  home: /                                  # 首页
+  archive: /archives                       # 归档页面
+  categories: /categories                  # 分类页面
+  tags: /tags                              # 标签页面
+  about: /about                            # 关于页面
+  github: https://github.com/cytrogen      # GitHub 个人主页
+  friends: /friends                        # 友情链接页面
+  rss: /atom.xml                           # RSS 订阅文件
 ```
 
-> 你可以修改这些键，来修改导航栏上的文字内容。例如将“博客”修改为“首页”。
+> 如何你想要创建归档、分类、标签页面，并且想要启动 i18n 的话，可以参考[这里](#i18n)。
+>
+> 或者不想要启动 i18n 的话，你可以选择去安装：
+>
+> ```bash
+> npm install --save hexo-generator-index hexo-generator-archive hexo-generator-category hexo-generator-tag
+> ```
+>
+> 关于它们的配置项，请自行去对应的仓库内查看。
 
-> 记得将 `GitHub` 的值修改为自己的！或者将其删去。
+```yaml
+# 导航栏布局配置，决定了不同功能按钮在导航栏中的位置分布
+nav:
+  pages:          # 导航栏上层：基础页面导航
+    - home        # 首页
+    - archive     # 归档
+    - categories  # 分类
+    - tags        # 标签
+    - about       # 关于
+  
+  external:       # 导航栏中层：外部链接
+    - github      # GitHub 链接
+    - rss         # RSS 订阅
+  
+  utility:        # 导航栏下层：实用工具
+    - friends     # 友情链接
+    - languages   # 语言切换菜单
+    - search      # 搜索功能
+```
 
-接着在 `source` 目录下创建 `about` 目录，并在内创建 `index.md` 即可创建关于页面。
+## i18n
 
-## 归档页面
+> 以下示例中使用的 `zh` 或 `en` 仅作为语言代码示范，您可以将其替换为任何语言代码，只需确保这些代码与 `themes/ares/languages` 目录下对应的 `yaml` 文件名**保持一致**即可。
 
-你可以在 Hexo 配置文件中加入任何 [Hexo-Generator-Archive](https://github.com/hexojs/hexo-generator-archive) 配置选项来修改网站的 `/archives` 页面：
+如果想要把网站 i18n 化，那就需要安装以下依赖：
+
+```bash
+npm install --save hexo-generator-plus
+```
+
+> 值得注意的是，该依赖**也可以生成索引、归档、分类和标签页面。**
+>
+> 如果这些功能也是你想要的，那么可以参考[该仓库的 `README`](https://github.com/kiwirafe/hexo-generator-plus) 来进行配置：
+>
+> ```yaml
+> generator_plus:
+>   pagination_dir: 'page'      # 分页目录
+>   generators: ["index", "archive", "category", "tag"]
+>
+>   index_generator:            # 索引生成器
+>     per_page: 10              # 每页显示的文章数
+>     order_by: -date           # 文章排序
+>
+>   archive_generator:          # 归档生成器
+>     per_page: 10
+>     order_by: -date
+>
+>   category_generator:         # 分类生成器
+>     per_page: 10
+>     order_by: -date
+>     enable_index_page: false  # 是否生成索引页面
+>
+>   tag_generator:              # 标签生成器
+>     per_page: 10
+>     order_by: -date
+>     enable_index_page: false
+> ```
+
+接着在 Hexo 配置文件中添加以下内容：
+
+```yaml
+# Hexo 原有的
+language: [zh, en]
+new_post_name: :title.md
+
+# 如果你安装了 Hexo-Abbrlink
+permalink: posts/:abbrlink.html
+abbrlink:
+  rep: hex
+
+# Hexo-Generator-Plus 的配置
+generator_plus:
+  language: [zh, en]
+```
+
+然后在主题配置文件中配置以下内容：
+
+> Hexo-Theme-Ares 对于 i18n 的逻辑为：
+>
+> 1. 如果当前的语言是默认语言，那么完整的网址会是 `网站域名/`
+>    - 例：`https://cytrogen.icu/`
+> 2. 如果当前的语言并非默认语言，那么完整的网址会是 `网站域名/语言/`
+>    - 例：`https://cytrogen.icu/en/`
+
+> 目前 Hexo-Theme-Ares 主题在多语言文章的 URL 路径显示上存在**局限性**，无法按照 `网站域名/语言/_posts/xxx.html` 的格式进行展示，而是统一以 `网站域名/_posts/xxx.html` 的默认格式呈现。
+
+```yaml
+default_lang: 你想要的默认语言
+```
+
+对于博客根目录的 `source` 目录结构，必须是这样的：
 
 ```
-archive_generator:
-  enabled: true
-  per_page: 25
-  yearly: true
-  monthly: true
-  daily: true
-  order_by: -date
+source/
+├── _posts/                     # 默认语言的所有博文
+│   └── *.md                    # 不能有子目录
+├── en/                         # 英文版特定内容
+│   └── 与 source 目录结构相同
+├── archives/                   # 归档页面
+│   └── index.md                # layout: archive
+├── categories/                 # 分类页面
+│   └── index.md                # layout: category-index
+└── tags/                       # 标签页面
+    └── index.md                # layout: tag-index
 ```
 
-## 标签页面
-
-你可以在 Hexo 配置文件中加入任何 [Hexo-Generator-Tag](https://github.com/hexojs/hexo-generator-tag) 配置选项来修改网站的 `/tags` 页面：
-
-```
-tag_generator:
-  per_page: 15
-  order_by: -asc
-  enable_index_page: tag-index
-```
-
-在 `source` 目录下新建 `tags/index.md` 即可自动生成 `/tags` 页面。不带有 `tags` 属性的文章不会出现在 `/tags` 页面。
-
-```md
----
-title: 测试
-date: 2024-04-01 00:00:00
-tags:
-  - 巴拉巴拉
----
-```
+> 对于上述目录中各个 `index.md` 文件，需要在文件头部添加相应的页面信息。
+> 
+> 例如归档页面的 `index.md` 应包含以下内容：
+>
+> ```markdown
+> ---
+> title: 归档
+> date:
+> lang: zh
+> layout: archive
+> ---
+> ```
 
 ## 评论
 
-Hexo-Theme-Ares 支持 Disqus 评论插件。请在主题配置项中这样设置：
+Hexo-Theme-Ares 支持 [Disqus](https://disqus.com/) 评论插件。
+
+请在主题配置项中这样设置：
 
 ```yaml
 disqus: 你的 Website Name
@@ -79,13 +173,31 @@ disqus: 你的 Website Name
 
 ## 友情链接
 
-在主题配置文件中这样添加友情链接：
+在主题配置文件中添加友情链接：
 
 ```yaml
 friend_links:
-    - name: 测试
+    - name: 第一个友链
       url: https://example.com
       description: 巴拉巴拉巴拉
+      lang: zh
+    - name: 第二个友链
+      url: https://example2.com
+      description: 巴拉巴拉巴拉
+      lang: zh
+```
+
+然后在 `source` 目录下创建 `friends/index.md` 文件：
+
+```markdown
+---
+title: 友情链接
+lang: zh
+date:
+layout: friendlinks
+---
+
+你想要在友情链接页面中说的话。
 ```
 
 ## Google Analytics
@@ -93,12 +205,12 @@ friend_links:
 在主题配置文件中添加 `ga` 设置项来启动 Google Analytics：
 
 ```yaml
-ga: G-xxxxxx
+ga: G-xxxxxxxxxx
 ```
 
 ## 本地搜索
 
-安装依赖项 Hexo-Generator-Search：
+安装依赖项 [Hexo-Generator-Search](https://github.com/wzpan/hexo-generator-search)：
 
 ```bash
 npm install --save hexo-generator-search

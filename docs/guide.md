@@ -1,11 +1,14 @@
-# 目录 <!-- omit in toc -->
+# 使用说明
 
-- [元描述](#元描述)
-- [标题](#标题)
-- [显示帖子预览](#显示帖子预览)
-- [警告块](#警告块)
-- [网站图标](#网站图标)
-- [Mermaid](#mermaid)
+## 目录 <!-- omit in toc -->
+
+- [使用说明](#使用说明)
+  - [元描述](#元描述)
+  - [标题](#标题)
+  - [显示帖子预览](#显示帖子预览)
+  - [警告块](#警告块)
+  - [网站图标](#网站图标)
+  - [Mermaid](#mermaid)
 
 ## 元描述
 
@@ -31,7 +34,7 @@ desc: 巴拉巴拉巴拉
 
 ## 标题
 
-Hexo-Theme-Ares 支持三种标题：
+Hexo-Theme-Ares 仅支持三种标题：
 
 - `h1` 为大标题
 - `h2` 和 `h3` 为中标题
@@ -41,7 +44,9 @@ Hexo-Theme-Ares 支持三种标题：
 
 ## 显示帖子预览
 
-如果希望在博客索引中包含一些文章预览文本，可以包含 `<!-- more -->` 语句。在 `<!-- more -->` 语句之前的所有内容都将被解析并显示在索引中。
+如果希望在博客索引中包含一些文章预览文本，可以包含 `<!-- more -->` 语句。
+
+在 `<!-- more -->` 语句之前的所有内容都将被解析并显示在索引中。
 
 ```markdown
 ---
@@ -75,30 +80,32 @@ desc: 巴拉巴拉巴拉。
 
 ## Mermaid
 
-想要启动 Mermaid 功能，首先需要在根目录下创建 `libs` 目录，并在内安装 [Hexo-Mermaid-Diagrams](https://github.com/mslxl/hexo-mermaid-diagrams)。
+目前 Hexo-Theme-Ares 想要启动 Mermaid 功能，依然需要用到 [Hexo-Mermaid-Diagrams](https://github.com/mslxl/hexo-mermaid-diagrams) 依赖。步骤也较为繁琐：
 
-> 你也可以选择直接使用 NPM 安装。
->
-> 但是，由于 Hexo-Mermaid-Diagrams 使用的是旧版本的 Mermaid（9.1.7），为了使用新版本的 Mermaid，需要对其文件进行修改。而 `node_modules` 目录默认不会被 Git 追踪，因此不推荐使用 NPM 安装。
+1. 首先需要在根目录下创建 `libs` 目录，并在内安装 Hexo-Mermaid-Diagrams。
 
-将 `libs/hexo-mermaid-diagrams/index.html` 修改为：
+    > 你可以选择直接使用 NPM 安装。
+    >
+    > 但是，由于 Hexo-Mermaid-Diagrams 使用的是旧版本的 Mermaid（9.1.7），如果想要使用新版本的 Mermaid，就需要对其文件进行修改。而 `node_modules` 目录默认不会被 Git 追踪，因此不推荐使用 NPM 安装。
 
-```html
-<!doctype html>
-<html>
-  <head>
-    <link rel="stylesheet" href="./fontawesome-free/css/all.min.css">
-  </head>
-  <body>
-    <div id="container"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js" integrity="sha512-6a80OTZVmEJhqYJUmYd5z8yHUCDlYnj6q9XwB/gKOEyNQV/Q8u+XeSG59a2ZKFEHGTYzgfOQKYEBtrZV7vBr+Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  </body>
-</html>
-```
+2. 将 `libs/hexo-mermaid-diagrams/index.html` 修改为：
 
-> 如果你有发现更新的 `mermaid.min.js`，可以自行将上面的 `<script>` 标签进行替换。
+    ```html
+    <!doctype html>
+    <html>
+      <head>
+        <link rel="stylesheet" href="./fontawesome-free/css/all.min.css">
+      </head>
+      <body>
+        <div id="container"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js" integrity="sha512-6a80OTZVmEJhqYJUmYd5z8yHUCDlYnj6q9XwB/gKOEyNQV/Q8u+XeSG59a2ZKFEHGTYzgfOQKYEBtrZV7vBr+Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      </body>
+    </html>
+    ```
 
-接着删除 `libs/hexo-mermaid-diagrams/mermaid.min.js`。
+    > 如果你有发现更新的 `mermaid.min.js`，可以自行将上面的 `<script>` 标签进行替换。
+
+3. 接着删除 `libs/hexo-mermaid-diagrams/mermaid.min.js`。
 
 使用方式非常简单：
 

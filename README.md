@@ -2,6 +2,8 @@
 
 ![](source/favicon.png)
 
+[ENGLISH](/docs/en/README.md)
+
 ## DEMO
 
 [点击这里查看。](https://hexo-theme-ares-demo.netlify.app/)
@@ -10,7 +12,7 @@
 
 运行以下命令即可快速启动并运行这个 Hexo 主题：
 
-> Windows 用户推荐使用 Git Bash。
+> Windows 用户推荐使用 **Git Bash**。
 
 ```bash
 # 初始化博客项目
@@ -42,7 +44,7 @@ hexo server
 
 ## TODO
 
-- [ ] 更好的友情链接区块
+- [X] 更好的友情链接区块
 - [ ] 更好的本地搜索功能
 - [ ] 更好的文档
 - [ ] 更好的代码块
@@ -56,10 +58,12 @@ hexo server
   - [ ] Mermaid 图
   - [ ] FontAwesome 不需要用户另外注册 Kit
   - [ ] 图片懒加载
-- [x] 主题 DEMO
+- [X] 国际化支持
+  - [ ] 更好的多语言文章 URL 路径格式
+- [X] 主题 DEMO
 
 ## 作者与鸣谢
 
 本主题是从 [Hexo-Theme-Hermes](https://github.com/claymcleod/hexo-theme-hermes) fork 而来，并进行了适度修改。
 
-[Hexo-Theme-Apollo](https://github.com/sun4cs/hexo-theme-apollo) 则是这一切的基础。他们为本主题打下了坚实的基础，对此我功不可没。
+[Hexo-Theme-Apollo](https://github.com/sun4cs/hexo-theme-apollo) 则是这一切的基础。他们为本主题打下了坚实的基础，对此他们功不可没。
