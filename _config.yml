@@ -1,41 +1,56 @@
+default_lang: zh
+
 menu:
-    博客: /
-    # 关于: /about/
-    归档: /archives/
-    标签: /tags/
-    GitHub: https://github.com/cytrogen
-    RSS: /atom.xml
+  home: /
+  archive: /archives
+  categories: /categories
+  tags: /tags
+  about: /about
+  github: https://github.com/cytrogen
+  friends: /friends
+  rss: /atom.xml
+
+nav:
+  pages:
+    - home
+    - archive
+    - categories
+    - tags
+    - about
+  
+  external:
+    - github
+    - rss
+  
+  utility:
+    - friends
+    - languages
+    - search
 
 favicon: favicon.png
 logo: favicon.png
 
-# Comment
-#disqus: cytrogen
+# Disqus Comment
+# disqus:
 
 # Google Analytics
-#ga:
+# ga: G-
 
 # Copyright Infomation
-startyear: 2024
+startyear:
 
 # Image Credits
 enable_image_credit: false
 
-# Friend Links
-#friend_links:
+# Blogroll / Friend Links
+# friend_links:
+#     - name:
+#       url:
+#       description:
+#       lang:
 
 # FontAwesome
-#fas:
-
-# hexo-renderer-markdown-it-plus
-math:
-    every_page: false
-    mathjax:
-        enable: true
-        tags: none
-    katex:
-        enable: false
-        copy_tex: false
+# fas:
 
 # hexo-generator-feed
 rss: /atom.xml
