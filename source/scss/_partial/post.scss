@@ -98,7 +98,11 @@
         background-color: $light-gray;
         font-family: $base-font-family;
   
-        br {
+        > p > br {
+          display: none;
+        }
+
+        br:not(figure.highlight *) {
           display: none;
         }
   
