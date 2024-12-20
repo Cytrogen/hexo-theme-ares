@@ -2,8 +2,8 @@ extends partial/layout
 
 block container
     include mixins/post
-    .archive
-        h2.archive-title= page.category
+    .category
+        h2= page.category
         +postList()
 
 block pagination
