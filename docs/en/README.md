@@ -51,8 +51,8 @@ Specifically, you might be interested in the following documentation:
 - [ ] Better documentation
 - [ ] Better code blocks
   - [ ] More language support
-  - [ ] Code block expand/collapse
-  - [ ] Code block height limit
+  - [X] Code block expand/collapse
+  - [X] Code block height limit
 - [ ] Remove unnecessary dependencies, CDNs, etc.
 - [ ] Add more analytics tools support
 - [ ] Add more plugins

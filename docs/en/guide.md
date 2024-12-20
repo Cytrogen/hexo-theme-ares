@@ -7,6 +7,8 @@
   - [Headers](#headers)
   - [Display Post Preview](#display-post-preview)
   - [Warning Blocks](#warning-blocks)
+  - [Collapsible Content](#collapsible-content)
+  - [Code Blocks](#code-blocks)
   - [Favicon](#favicon)
   - [Mermaid](#mermaid)
 
@@ -73,6 +75,45 @@ This is an example!
 		
 </div>
 ```
+
+## Collapsible Content
+
+Use `details` and `summary` tags to create collapsible content:
+
+```html
+<details>
+<summary>Click to expand</summary>
+
+This is the collapsed content...
+Can contain any markdown content
+
+- List items
+- Code blocks
+- etc.
+
+</details>
+```
+
+If `summary` is not specified, it will show the default "Details".
+
+## Code Blocks
+
+The complete syntax for code blocks is:
+
+````markdown
+```[language] [title] [url] [link text] [additional options]
+code snippet
+```
+````
+
+Where:
+
+- language: specify the code language
+- title: title of the code block
+- url: source link of the code
+- link text: display text for the link
+- additional options: additional options, check [Hexo's doc](https://hexo.io/docs/tag-plugins.html#Code-Block)
+- code snippet: the code content
 
 ## Favicon
 
