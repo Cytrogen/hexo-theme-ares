@@ -4,6 +4,7 @@
 
 - [使用说明](#使用说明)
   - [元描述](#元描述)
+    - [索引页](#索引页)
   - [标题](#标题)
   - [显示帖子预览](#显示帖子预览)
   - [警告块](#警告块)
@@ -14,25 +15,47 @@
 
 ## 元描述
 
-如果要设置元描述信息，请为每篇文章设置 `desc` 属性和值。更好的方法是在脚手架文件中设置默认的 `desc` 属性，就像这样：
+元描述是搜索引擎用于展示网站内容的简短摘要。
+
+页面的元描述优先使用你自己在 Front Matter 中设置的 `description`。如果你没有设置，主题会按照以下优先级自动生成：
+
+1. `page.description`：如果你在 Front Matter 中设置了 `description` 属性
+2. `page.excerpt`：如果 `description` 不存在，主题将使用摘要。关于摘要，详情查看[这里](#显示帖子预览)
+3. 默认值：如果以上两者都不存在，主题将使用页面标题和作者作为默认描述，格式为：`[文章标题] - [作者]`
+
+如果你在文章 Front Matter 中设置了 `description`：
 
 ```markdown
 ---
 title: 测试
 date: 2024-04-01 00:00:00
-desc: 巴拉巴拉巴拉
+description: 巴拉巴拉巴拉
 ---
-
-巴拉巴拉巴拉巴拉巴拉巴拉。
 ```
 
-生成结果：
+最终生成的 HTML 会是：
 
 ```html
-<meta name="description" content="巴拉巴拉巴拉。">
+<meta name="description" content="巴拉巴拉巴拉">
 ```
 
-如果没有 `desc` 属性或值，Hexo-Theme-Ares 将使用 `page.title` 和 `page.author` 代替。
+### 索引页
+
+> 索引页包含文章索引页、标签索引页和分类索引页。
+
+索引页的元描述则更为简单。它会直接使用 Hexo 站点配置文件 `_config.yml` 中的 `description` 属性。如果站点配置中没有设置，主题会使用一个硬编码的默认值 `'A Blog Powered By Hexo'`。
+
+在 `_config.yml` 中：
+
+```yaml
+description: “我的个人博客，专注于前端技术分享。”
+```
+
+最终在索引页生成的 HTML 会是：
+
+```html
+<meta name="description" content="我的个人博客，专注于前端技术分享。">
+```
 
 ## 标题
 

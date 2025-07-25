@@ -4,6 +4,8 @@
 
 - [Configuration Options](#configuration-options)
   - [Menu](#menu)
+    - [Link Configuration](#link-configuration)
+    - [Function Button Configuration](#function-button-configuration)
   - [i18n](#i18n)
   - [Comments](#comments)
   - [Blogroll](#blogroll)
@@ -17,20 +19,67 @@
 
 ## Menu
 
-You can freely configure the menu bar content in the theme configuration file:
+In the theme configuration file, you can freely configure the content and layout of the menu bar. The theme divides the navigation bar into `primary` and `secondary` sections, each of which can contain `links` and `buttons`.
+
+### Link Configuration
+
+Links are used to configure specific page navigation. Each link contains the following three key fields:
+
+- `type`: The link type, which can be `internal` or `external`
+- `key`: The key name for multi-language support, corresponding to the language files in the `themes/ares/languages` directory
+- `path`: The actual URL path of the link
+
+Here is a complete example of link configuration:
 
 ```yaml
-# Menu configuration list, defining the access paths for each page:
-menu:
-  home: /                                  # Homepage
-  archive: /archives                       # Archive page
-  categories: /categories                  # Categories page
-  tags: /tags                              # Tags page
-  about: /about                            # About page
-  github: https://github.com/cytrogen      # GitHub profile
-  friends: /friends                        # Blogroll page
-  rss: /atom.xml                           # RSS feed file
+# Navigation bar configuration, defining the content and layout of the primary and secondary navigation bars.
+nav:
+  primary:
+    links:
+      - type: internal
+        key: home
+        path: /
+  
+  secondary:
+    links:
+      - type: internal
+        key: archive
+        path: /archives
+      - type: internal
+        key: categories
+        path: /categories
+      - type: internal
+        key: tags
+        path: /tags
+      - type: external
+        key: github
+        path: https://github.com/cytrogen/hexo-theme-ares
 ```
+
+### Function Button Configuration
+
+Function buttons (`button`) are used to configure special functions, such as language switching or search. Each button contains the following three key fields:
+
+- `type`: The button type, currently only `component` is supported
+- `key`: The key name for multi-language support, such as `language` or `search`
+- `component`: The name of a built-in theme component, currently supporting `language-switcher` and `search`
+
+Here is a complete example of function button configuration:
+
+```yaml
+# Navigation bar configuration, defining the content and layout of the primary and secondary navigation bars.
+nav:
+  primary:
+    buttons:
+      - type: component
+        key: language
+        component: language-switcher
+      - type: component
+        key: search
+        component: search
+```
+
+> **Note**: The `home`, `archive`, etc., keys from the old menu configuration are no longer in use. Please update your configuration according to the new structure.
 
 > If you want to create archive, category, and tag pages, and want to enable i18n, you can refer to [here](#i18n).
 >

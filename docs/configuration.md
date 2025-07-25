@@ -4,6 +4,8 @@
 
 - [配置项](#配置项)
   - [菜单](#菜单)
+    - [链接配置](#链接配置)
+    - [功能按钮配置](#功能按钮配置)
   - [i18n](#i18n)
   - [评论](#评论)
   - [友情链接](#友情链接)
@@ -17,22 +19,69 @@
 
 ## 菜单
 
-在主题配置文件中你可以自由配置菜单栏的内容：
+在主题配置文件中，你可以自由配置菜单栏的内容和布局。主题将导航栏分为了 `primary`（主导航）和 `secondary`（副导航）两个部分，每个部分都可以包含链接（`links`）和功能按钮（`buttons`）。
+
+### 链接配置
+
+链接（`links`）用于配置具体的页面导航。每个链接都包含以下三个关键字段：
+
+- `type`：链接类型，可以是 `internal`（内部链接）或 `external`（外部链接）
+- `key`：用于多语言的键名，与 `themes/ares/languages` 目录下的语言文件相对应
+- `path`：链接的实际 URL 路径
+
+以下是完整的链接配置示例：
 
 ```yaml
-# 菜单配置列表，定义了各个页面的访问路径：
-menu:
-  home: /                                  # 首页
-  archive: /archives                       # 归档页面
-  categories: /categories                  # 分类页面
-  tags: /tags                              # 标签页面
-  about: /about                            # 关于页面
-  github: https://github.com/cytrogen      # GitHub 个人主页
-  friends: /friends                        # 友情链接页面
-  rss: /atom.xml                           # RSS 订阅文件
+# 导航栏配置，定义了主次导航栏的内容和布局。
+nav:
+  primary:
+    links:
+      - type: internal
+        key: home
+        path: /
+  
+  secondary:
+    links:
+      - type: internal
+        key: archive
+        path: /archives
+      - type: internal
+        key: categories
+        path: /categories
+      - type: internal
+        key: tags
+        path: /tags
+      - type: external
+        key: github
+        path: https://github.com/cytrogen/hexo-theme-ares
 ```
 
-> 如何你想要创建归档、分类、标签页面，并且想要启动 i18n 的话，可以参考[这里](#i18n)。
+### 功能按钮配置
+
+功能按钮（`button`）用于配置一些特殊功能，如语言切换或搜索。每个按钮包含以下三个关键字段：
+
+- `type`：按钮类型，目前仅支持 `component`
+- `key`：用于多语言的键名，例如 `language`、`search`
+- `component`：主题内置的组件名称，目前支持 `language-switcher` 和 `search`
+
+以下是完整的功能按钮配置示例：
+
+```yaml
+# 导航栏配置，定义了主次导航栏的内容和布局。
+nav:
+  primary:
+    buttons:
+      - type: component
+        key: language
+        component: language-switcher
+      - type: component
+        key: search
+        component: search
+```
+
+> **注意**：旧版菜单配置中的 `home`、`archive` 等键名已不再使用，请参考新的配置结构进行更新。
+
+> 如果你想要创建归档、分类、标签页面，并且想要启动 i18n 的话，可以参考[这里](#i18n)。
 >
 > 或者不想要启动 i18n 的话，你可以选择去安装：
 >

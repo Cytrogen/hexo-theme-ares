@@ -4,6 +4,7 @@
 
 - [User Guide](#user-guide)
   - [Meta Description](#meta-description)
+    - [Index Pages](#index-pages)
   - [Headers](#headers)
   - [Display Post Preview](#display-post-preview)
   - [Warning Blocks](#warning-blocks)
@@ -14,25 +15,47 @@
 
 ## Meta Description
 
-To set meta description information, set the `desc` property and value for each article. A better approach is to set a default `desc` property in the scaffold file, like this:
+The meta description is a short summary of a website's content used by search engines.
+
+The meta description for a page preferentially uses the `description` you set in the Front Matter. If you don't set one, Hexo-Theme-Ares will automatically generate it in the following order of priority:
+
+1. `page.description`: If you have set the `description` attribute in the Front Matter
+2. `page.excerpt`: If `description` does not exist, the theme will use the excerpt. For more details on excerpts, see [here](#display-post-preview)
+3. Default value: If neither of the above exists, the theme will use the page title and author as the default description, in the format: `[Post Title] - [Author]`
+
+If you set `description` in the article's Front Matter:
 
 ```markdown
 ---
 title: Test
 date: 2024-04-01 00:00:00
-desc: Blah blah blah
+description: Blah blah blah
 ---
-
-Blah blah blah blah blah blah.
 ```
 
-Generated result:
+The final generated HTML will be:
 
 ```html
-<meta name="description" content="Blah blah blah.">
+<meta name="description" content="Blah blah blah">
 ```
 
-If there is no `desc` property or value, Hexo-Theme-Ares will use `page.title` and `page.author` instead.
+### Index Pages
+
+> Index pages include the main article index, tag index pages, and category index pages.
+
+The meta description for index pages is simpler. It directly uses the `description` attribute from Hexo's site configuration file `_config.yml`. If it is not set in the site configuration, the theme will use a hardcoded default value: `'A Blog Powered By Hexo'`.
+
+In `_config.yml`:
+
+```yaml
+description: "My personal blog, focusing on front-end technology sharing."
+```
+
+The final HTML generated on an index page will be:
+
+```html
+<meta name="description" content="My personal blog, focusing on front-end technology sharing.">
+```
 
 ## Headers
 
