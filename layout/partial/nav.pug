@@ -1,27 +1,34 @@
 include mixins/nav
 
 nav.site-nav
-    .nav-section.page-nav
-        ul.nav-list
-            each item in theme.nav.pages
-                li.nav-list-item
-                    - var path = theme.menu[item];
-                    +internal-link(path, item)
-
-    .nav-section.external-nav
-        ul.nav-list
-            each item in theme.nav.external
-                li.nav-list-item
-                    - var path = theme.menu[item];
-                    +external-link(path, item)
-
-    .nav-section.utility-nav
-        ul.nav-list
-            each item in theme.nav.utility
-                li.nav-list-item
-                    case item
-                        when 'languages'
+    .nav-main
+        .nav-primary
+            if theme.nav.primary.links && theme.nav.primary.links.length
+                ul.nav-list.hidden-mobile
+                    each item in theme.nav.primary.links
+                        li.nav-item
+                            +nav-link(item)
+            
+            if theme.nav.primary.buttons && theme.nav.primary.buttons.length
+                .nav-tools
+                    each button in theme.nav.primary.buttons
+                        if button.component === 'language-switcher'
                             +language-switcher()
-                        when 'search'
-                            if config.search
-                                +search-box()
+                        else if button.component === 'search'
+                            +search-button()
+        
+            .nav-controls
+                .more-menu.hidden-mobile
+                    +more-menu()
+                
+                button.hamburger-menu.hidden-desktop(type="button" aria-label=__('nav.menu'))
+                    i.fas.fa-bars
+        
+        if theme.nav.secondary && theme.nav.secondary.buttons && theme.nav.secondary.buttons.length
+            .nav-secondary-buttons
+                each button in theme.nav.secondary.buttons
+                    if button.component
+                        +nav-button(button)
+    
+    +search-overlay()
+    +mobile-menu()

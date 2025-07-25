@@ -1,12 +1,13 @@
 menu:
   home: HOME
-  archive: ARC
-  tags: TAG
-  categories: CATEG
+  archive: ARCHIVE
+  tags: TAGS
+  categories: CATEGORIES
   friends: BLOGROLL
   about: ABOUT
   github: GITHUB
   rss: RSS
+  portfolio: PORTFOLIO
 nav:
   search_placeholder: Search...
   current_language: English
@@ -14,6 +15,8 @@ nav:
     en: English
     zh: 中文
     jp: 日本語
+  more: MORE
+  close: CLOSE
 code:
   expand: Expand
   fold: Fold

@@ -1,31 +1,43 @@
 default_lang: zh
 
-menu:
-  home: /
-  archive: /archives
-  categories: /categories
-  tags: /tags
-  about: /about
-  github: https://github.com/cytrogen
-  friends: /friends
-  rss: /atom.xml
-
 nav:
-  pages:
-    - home
-    - archive
-    - categories
-    - tags
-    - about
+  primary:
+    links:
+      - type: internal
+        key: home
+        path: /
+    
+    buttons:
+      - type: component
+        key: language
+        component: language-switcher
+      - type: component
+        key: search
+        component: search
   
-  external:
-    - github
-    - rss
-  
-  utility:
-    - friends
-    - languages
-    - search
+  secondary:
+    links:
+      - type: internal
+        key: archive
+        path: /archives
+      - type: internal
+        key: categories
+        path: /categories
+      - type: internal
+        key: tags
+        path: /tags
+      - type: internal
+        key: about
+        path: /about
+      - type: internal
+        key: friends
+        path: /friends
+      - type: internal
+        key: rss
+        path: /atom.xml
+      - type: external
+        key: github
+        path: https://github.com/cytrogen
 
 favicon: favicon.png
 logo: favicon.png

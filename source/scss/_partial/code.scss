@@ -127,21 +127,28 @@ figure.highlight {
   }
 
   &.folded {
-    max-height: 300px;
+    max-height: 600px;
     overflow-y: hidden;
     
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 30px;
-      background: linear-gradient(
-        transparent,
-        $light-gray
-      );
-      pointer-events: none;
+    &:has(.code pre) {
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(
+          transparent,
+          $light-gray
+        );
+        pointer-events: none;
+      }
+    }
+
+    &:not(:has(.code pre:after)) {
+      max-height: unset; 
+      overflow-y: visible;
     }
   }
 }
