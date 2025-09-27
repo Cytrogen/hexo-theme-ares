@@ -9,6 +9,7 @@ menu:
   rss: RSS
   portfolio: PORTFOLIO
 nav:
+  search: Search
   search_placeholder: Search...
   current_language: English
   languages:
@@ -17,6 +18,12 @@ nav:
     jp: 日本語
   more: MORE
   close: CLOSE
+search:
+  close: Close
+  description: Enter keywords to search posts
+  results: Search Results
+  no_results: No results found
+  loading: Loading...
 code:
   expand: Expand
   fold: Fold
@@ -26,7 +33,9 @@ code:
 friendlinks: Blogrolls
 archive_title: Archive
 tags_title: Tags
+tag_page_description: "A list of all articles with the '%s' tag."
 categories_title: Categories
+category_page_description: "A list of all articles in the '%s' category."
 prev: PREV
 next: NEXT
 prev_post: PREV POST
