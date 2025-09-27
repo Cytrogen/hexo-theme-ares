@@ -1,4 +1,5 @@
 include mixins/nav
+include mixins/icons
 
 nav.site-nav
     .nav-main
@@ -14,15 +15,36 @@ nav.site-nav
                     each button in theme.nav.primary.buttons
                         if button.component === 'language-switcher'
                             +language-switcher()
-                        else if button.component === 'search'
-                            +search-button()
         
             .nav-controls
                 .more-menu.hidden-mobile
                     +more-menu()
                 
-                button.hamburger-menu.hidden-desktop(type="button" aria-label=__('nav.menu'))
-                    i.fas.fa-bars
+                //- 搜索按钮 (条件渲染)
+                if theme.search && theme.search.enable
+                    button.search-toggle(type="button", aria-label=__('nav.search'), title=__('nav.search'))
+                        +icon-search()
+                
+                //- 主题切换按钮
+                +theme-switcher()
+                
+                details.mobile-menu-details.hidden-desktop
+                    summary.hamburger-menu(aria-label=__('nav.menu'))
+                        +icon-bars()
+                        span.menu-text= __('nav.menu')
+                    
+                    .mobile-menu-dropdown
+                        ul.mobile-nav-list
+                            each item in [...theme.nav.primary.links, ...theme.nav.secondary.links]
+                                li.mobile-nav-item
+                                    if item.type === 'internal'
+                                        - var fullPath = page.lang === theme.default_lang ? item.path : `/${page.lang}${item.path}`
+                                        a.mobile-nav-link(href=url_for(fullPath))
+                                            != __(`menu.${item.key}`)
+                                    else if item.type === 'external'
+                                        a.mobile-nav-link(href=item.path target="_blank" rel="noopener noreferrer")
+                                            != __(`menu.${item.key}`)
+                                            +icon-external-link()
         
         if theme.nav.secondary && theme.nav.secondary.buttons && theme.nav.secondary.buttons.length
             .nav-secondary-buttons
@@ -30,5 +52,3 @@ nav.site-nav
                     if button.component
                         +nav-button(button)
     
-    +search-overlay()
-    +mobile-menu()

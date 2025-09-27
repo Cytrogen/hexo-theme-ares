@@ -2,18 +2,44 @@ extends partial/layout
 
 block container
     include mixins/post
-    .tag-index
+    .archive
         - var pageTitle = page.title != null ? page.title: __('tags_title');
         h2= pageTitle
-        .tag-list
-            each tag in get_tags().data
-                - var postCount = tag.posts.data ? tag.posts.data.filter(post => post.lang === page.lang).length : 0
-                if postCount > 0
-                    .tag-item
-                        - var tagPath = tag.slug || tag.name
-                        a(href=url_for_lang(page.lang, 'tags/' + tagPath))
-                            = tag.name
-                            span.tag-count= ` (${postCount})`
+        
+        - var tags = get_tags().data.filter(tag => {
+        -   var postCount = tag.posts.data ? tag.posts.data.filter(post => post.lang === page.lang).length : 0;
+        -   return postCount > 0;
+        - });
+        
+        - var tagGroups = {};
+        - var pinyinMap = {'一':'A','二':'E','三':'S','四':'S','五':'W','六':'L','七':'Q','八':'B','九':'J','十':'S'};
+        - tags.forEach(function(tag) {
+        -   var name = tag.name;
+        -   var firstChar = name.charAt(0).toUpperCase();
+        -   if (/^[A-Z]/.test(firstChar)) {
+        -     var groupKey = firstChar;
+        -   } else if (/^[\u4e00-\u9fa5]/.test(firstChar)) {
+        -     var groupKey = pinyinMap[firstChar] || '#';
+        -   } else {
+        -     var groupKey = '#';
+        -   }
+        -   if (!tagGroups[groupKey]) tagGroups[groupKey] = [];
+        -   tagGroups[groupKey].push(tag);
+        - });
+        
+        - Object.keys(tagGroups).sort().forEach(function(letter) {
+        -   tagGroups[letter].sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'));
+            h2.archive-year= letter
+            - tagGroups[letter].forEach(function(tag) {
+                - var postCount = tag.posts.data ? tag.posts.data.filter(post => post.lang === page.lang).length : 0;
+                .post-item
+                    .post-info
+                        span.tag-count= `(${postCount})`
+                    - var tagPath = tag.slug || tag.name
+                    a.post-title-link(href=url_for_lang(page.lang, 'tags/' + tagPath))
+                        = tag.name
+            - })
+        - })
 
 block copyright
     include partial/copyright

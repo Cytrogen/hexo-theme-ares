@@ -12,168 +12,183 @@ if ga
         | gtag('js', new Date());
         | gtag('config', '#{ga}');
 
-//- Local search
-if config.search
-    script(src=url_for('/js/search.js'))
-    script.
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchBtn = document.getElementById('search-btn');
-            const searchPopup = document.getElementById('search-popup');
-            const searchInput = document.getElementById('local-search-input');
-            const searchClose = document.getElementById('search-close');
-
-            if (searchBtn && searchPopup && searchInput) {
-                searchBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    searchPopup.classList.remove('hidden');
-                    searchInput.focus();
-                });
-
-                searchPopup.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-
-                if (searchClose) {
-                    searchClose.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        searchPopup.classList.add('hidden');
-                    });
-                }
-
-                document.addEventListener('click', function() {
-                    searchPopup.classList.add('hidden');
-                });
-
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') {
-                        searchPopup.classList.add('hidden');
-                    }
-                });
-
-                let search_path = "#{config.search.path}";
-                if (search_path.length === 0) {
-                    search_path = "search.xml";
-                }
-                const path = "#{config.root}" + search_path;
-                searchFunc(path, 'local-search-input', 'local-search-result');
-            }
-        });
-
-//- Language switch
-if config.language
-    script.
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageToggle = document.querySelector('.language-toggle');
-            const languageDropdown = document.querySelector('.language-dropdown');
-
-            if (languageToggle && languageDropdown) {
-            languageToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                languageDropdown.classList.toggle('hidden');
-            });
-
-            languageDropdown.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-
-            document.addEventListener('click', function() {
-                languageDropdown.classList.add('hidden');
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                languageDropdown.classList.add('hidden');
-                }
-            });
-            }
-        });
-
-//- More menu
+//- Snippet B: Main Body Script - Theme Switcher Logic
 script.
+  (function() {
+    // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
-        const moreToggle = document.querySelector('.more-toggle');
-        const moreDropdown = document.querySelector('.more-dropdown');
-
-        if (moreToggle && moreDropdown) {
-            moreToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                moreDropdown.classList.toggle('hidden');
-            });
-
-            moreDropdown.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-
-            document.addEventListener('click', function() {
-                moreDropdown.classList.add('hidden');
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    moreDropdown.classList.add('hidden');
-                }
-            });
+      const themeToggle = document.querySelector('.theme-toggle');
+      
+      if (!themeToggle) return;
+      
+      // Get current theme
+      const getCurrentTheme = () => {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+      };
+      
+      // Update UI to match current theme
+      const updateUI = (theme) => {
+        const isDark = theme === 'dark';
+        themeToggle.setAttribute('aria-pressed', isDark.toString());
+      };
+      
+      // Simplified theme setter - CSS handles all animations
+      const setTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme; // Update native UI elements
+        
+        // Also update page-wrapper for animation support
+        const pageWrapper = document.getElementById('page-wrapper');
+        if (pageWrapper) {
+          pageWrapper.setAttribute('data-theme', theme);
         }
+        
+        // Find and remove the temporary anti-flicker style tag if it exists.
+        // This ensures the main stylesheet takes full control after the initial load.
+        const antiFlickerStyle = document.getElementById('anti-flicker-style');
+        if (antiFlickerStyle) {
+          antiFlickerStyle.remove();
+        }
+        
+        localStorage.setItem('theme', theme);
+        updateUI(theme);
+      };
+      
+      // Simple theme toggle - letting CSS handle the smooth transitions
+      const toggleTheme = () => {
+        const current = getCurrentTheme();
+        const newTheme = current === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+      };
+      
+      // Initialize UI on page load
+      updateUI(getCurrentTheme());
+      
+      // Add click event listener
+      themeToggle.addEventListener('click', toggleTheme);
+      
+      // Listen for system theme changes
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', function(e) {
+          // Only update if no manual preference is saved
+          if (!localStorage.getItem('theme')) {
+            const theme = e.matches ? 'dark' : 'light';
+            setTheme(theme);
+          }
+        });
+      }
     });
+  })();
 
-//- Mobile navigation
-script.
-    const hamburger = document.querySelector('.hamburger-menu');
-    const mobileMenu = document.querySelector('.mobile-menu-container');
-    const menuClose = document.querySelector('.menu-close');
-    
-    if (hamburger && mobileMenu) {
-        const closeDropdowns = () => {
-            const openDropdowns = mobileMenu.querySelectorAll('.dropdown-menu.show');
-            const rotatedToggles = mobileMenu.querySelectorAll('.dropdown-toggle.rotated');
-            openDropdowns.forEach(dropdown => dropdown.classList.remove('show'));
-            rotatedToggles.forEach(toggle => toggle.classList.remove('rotated'));
-        };
-
-        const closeMenu = () => {
-            mobileMenu.classList.remove('show');
-            hamburger.setAttribute('aria-expanded', false);
-            closeDropdowns();
-        };
-
-        hamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            mobileMenu.classList.toggle('show');
-            const isExpanded = mobileMenu.classList.contains('show');
-            hamburger.setAttribute('aria-expanded', isExpanded);
+//- Search Dialog Control - Minimal UI JavaScript (Separate from Search Logic)
+if theme.search && theme.search.enable
+  script.
+    (function() {
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchToggle = document.querySelector('.search-toggle');
+        const searchDialog = document.querySelector('#search-dialog');
+        const searchCloseBtn = document.querySelector('.search-dialog__close');
+        const searchInput = document.querySelector('#search-input');
+        
+        if (!searchToggle || !searchDialog) return;
+        
+        // Open dialog when search button is clicked
+        searchToggle.addEventListener('click', function() {
+          searchDialog.showModal();
+          // Focus the input after a brief delay to ensure dialog is fully opened
+          setTimeout(() => {
+            if (searchInput) searchInput.focus();
+          }, 100);
         });
-
-        if (menuClose) {
-            menuClose.addEventListener('click', closeMenu);
+        
+        // Close dialog when close button is clicked
+        if (searchCloseBtn) {
+          searchCloseBtn.addEventListener('click', function() {
+            searchDialog.close();
+          });
         }
-
-        const dropdownItems = mobileMenu.querySelectorAll('.has-dropdown');
-        dropdownItems.forEach(item => {
-            const link = item.querySelector('.nav-link');
-            const dropdownMenu = item.querySelector('.dropdown-menu');
-            const dropdownToggle = item.querySelector('.dropdown-toggle');
-
-            if (link && dropdownMenu) {
-                link.addEventListener('click', function(e) {
-                    if (e.target !== link) return;
-                    e.preventDefault();
-                    dropdownMenu.classList.toggle('show');
-                    dropdownToggle?.classList.toggle('rotated');
-                });
-            }
+        
+        // Close dialog when clicking backdrop (outside dialog content)
+        searchDialog.addEventListener('click', function(event) {
+          if (event.target === searchDialog) {
+            searchDialog.close();
+          }
         });
-
-        mobileMenu.addEventListener('click', e => e.stopPropagation());
-
-        document.addEventListener('click', closeMenu);
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('show')) {
-                closeMenu();
-            }
+        
+        // Close dialog on Escape key
+        searchDialog.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape') {
+            searchDialog.close();
+          }
         });
-    }
+        
+        // Clear search input when dialog closes
+        searchDialog.addEventListener('close', function() {
+          if (searchInput) {
+            searchInput.value = '';
+            // Clear search results
+            const searchResults = document.querySelector('#search-results .search-results__list');
+            if (searchResults) searchResults.innerHTML = '';
+            // Hide loading/empty states
+            const loading = document.querySelector('.search-results__loading');
+            const empty = document.querySelector('.search-results__empty');
+            if (loading) loading.hidden = true;
+            if (empty) empty.hidden = true;
+          }
+        });
+      });
+    })();
+    
+  //- Load Search Functionality JavaScript
+  script(src=url_for('js/search.js'), defer)
+
+//- Back to Top Button JavaScript
+script.
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTopBtn = document.querySelector('.back-to-top');
+      
+      if (!backToTopBtn) return;
+      
+      // Show/hide button based on scroll position
+      const toggleButtonVisibility = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const shouldShow = scrollTop > 200; // Show after scrolling 200px
+        
+        if (shouldShow) {
+          backToTopBtn.classList.add('is-visible');
+        } else {
+          backToTopBtn.classList.remove('is-visible');
+        }
+      };
+      
+      // Throttle scroll events for better performance
+      let ticking = false;
+      const handleScroll = () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            toggleButtonVisibility();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+      
+      // Smooth scroll to top when clicked
+      const scrollToTop = (event) => {
+        event.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      };
+      
+      // Add event listeners
+      window.addEventListener('scroll', handleScroll);
+      backToTopBtn.addEventListener('click', scrollToTop);
+      
+      // Check initial scroll position
+      toggleButtonVisibility();
+    });
+  })();

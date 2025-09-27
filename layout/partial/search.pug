@@ -1,5 +1,25 @@
-if config.search
-    div#search-popup.hidden
-        div#search-panel
-            input(type="text", id="local-search-input", placeholder=__('nav.search_placeholder'))
-            div#local-search-result
+//- Modern Search Dialog using HTML <dialog> element
+//- Conditionally rendered based on theme configuration
+if theme.search && theme.search.enable
+    dialog#search-dialog.search-dialog(aria-labelledby="search-title", aria-describedby="search-description")
+        .search-dialog__header
+            h2#search-title.search-dialog__title= __('nav.search')
+            button.search-dialog__close(type="button", aria-label=__('search.close'), title=__('search.close'))
+                +icon-close()
+        
+        .search-dialog__body
+            p#search-description.search-dialog__description= __('search.description')
+            .search-dialog__input-wrapper
+                input#search-input.search-dialog__input(
+                    type="search",
+                    placeholder=__('nav.search_placeholder'),
+                    aria-label=__('nav.search_placeholder'),
+                    autocomplete="off",
+                    spellcheck="false"
+                )
+            
+            .search-dialog__results
+                div#search-results.search-results(aria-live="polite", aria-label=__('search.results'))
+                    .search-results__empty(hidden)= __('search.no_results')
+                    .search-results__loading(hidden)= __('search.loading')
+                    .search-results__list
