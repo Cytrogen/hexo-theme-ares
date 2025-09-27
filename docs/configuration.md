@@ -62,7 +62,7 @@ nav:
 
 - `type`：按钮类型，目前仅支持 `component`
 - `key`：用于多语言的键名，例如 `language`、`search`
-- `component`：主题内置的组件名称，目前支持 `language-switcher` 和 `search`
+- `component`：主题内置的组件名称，目前支持 `language-switcher`、`search` 和 `theme-switcher`
 
 以下是完整的功能按钮配置示例：
 
@@ -77,6 +77,9 @@ nav:
       - type: component
         key: search
         component: search
+      - type: component
+        key: theme-switcher
+        component: theme-switcher
 ```
 
 > **注意**：旧版菜单配置中的 `home`、`archive` 等键名已不再使用，请参考新的配置结构进行更新。

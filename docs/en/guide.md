@@ -12,6 +12,9 @@
   - [Code Blocks](#code-blocks)
   - [Favicon](#favicon)
   - [Mermaid](#mermaid)
+  - [Accessibility (A11y)](#accessibility-a11y)
+  - [Theme Switcher](#theme-switcher)
+  - [Back to Top Button](#back-to-top-button)
 
 ## Meta Description
 
@@ -184,3 +187,19 @@ graph TD;
 ```
 
 For syntax, please refer to the [Mermaid official website](https://mermaid.js.org/intro/).
+
+## Accessibility (A11y)
+
+The theme has built-in accessibility support, including keyboard navigation, screen reader optimization, focus indicators, and other features. These features are enabled by default and require no configuration.
+
+## Theme Switcher
+
+The theme supports light and dark mode switching, automatically selecting themes based on system settings, and users can also manually switch. User choices are saved to local storage.
+
+The theme switcher is displayed in the navigation bar by default.
+
+## Back to Top Button
+
+The back to top button automatically appears in the bottom right corner of the page when users scroll down, and smoothly scrolls to the top of the page when clicked.
+
+This feature is enabled by default.

@@ -62,7 +62,7 @@ Function buttons (`button`) are used to configure special functions, such as lan
 
 - `type`: The button type, currently only `component` is supported
 - `key`: The key name for multi-language support, such as `language` or `search`
-- `component`: The name of a built-in theme component, currently supporting `language-switcher` and `search`
+- `component`: The name of a built-in theme component, currently supporting `language-switcher`, `search` and `theme-switcher`
 
 Here is a complete example of function button configuration:
 
@@ -77,6 +77,9 @@ nav:
       - type: component
         key: search
         component: search
+      - type: component
+        key: theme-switcher
+        component: theme-switcher
 ```
 
 > **Note**: The `home`, `archive`, etc., keys from the old menu configuration are no longer in use. Please update your configuration according to the new structure.

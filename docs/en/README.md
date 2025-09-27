@@ -63,6 +63,11 @@ Specifically, you might be interested in the following documentation:
 - [X] Internationalization support
   - [ ] Better URL path format for multilingual articles
 - [x] Theme DEMO
+- [X] Accessibility (A11y) support
+- [X] Theme switcher
+- [X] Back to top button
+- [X] Font management optimization
+- [X] Icon system refactor
 
 ## Author and Acknowledgments
 
