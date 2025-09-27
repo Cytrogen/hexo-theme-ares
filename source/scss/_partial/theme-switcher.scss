@@ -1,0 +1,304 @@
+@use "sass:color";
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// Theme switcher component
+.theme-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.theme-toggle {
+  // 使用与nav-item-base相同的基础样式
+  display: inline-flex;
+  align-items: center;
+  color: $text-color;
+  text-decoration: none;
+  font-size: var(--font-size-nav);
+  line-height: 1;
+  height: 2.5rem;
+  padding: 0;
+  transition: all $transition-duration $transition-timing;
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-duration $transition-timing;
+  overflow: hidden;
+
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+    border-bottom-color: transparent;
+  }
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+.theme-icon {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    transition: inherit;
+  }
+  
+  // 亮色模式：显示月亮图标
+  &.moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+  
+  // 暗色模式：隐藏月亮图标
+  &.sun-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.5);
+  }
+}
+
+// Modern CSS-first theme switching animation
+// Uses @starting-style for performant, compositor-thread animations
+html {
+  // Natural transition for all theme-aware properties
+  transition: 
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Enhanced theme transition using modern CSS
+[data-theme] {
+  // All theme-aware elements get smooth transitions
+  * {
+    transition: 
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// @starting-style for initial theme load (where supported)
+@starting-style {
+  #page-wrapper[data-theme] {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+// Smooth entrance animation - now targets page-wrapper instead of html
+#page-wrapper[data-theme] {
+  opacity: 1;
+  transform: scale(1);
+  transition: 
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Enhanced theme switcher styles using new color system
+[data-theme="dark"] {
+  // Theme switcher specific dark mode styles
+  .theme-toggle {
+    color: var(--text-primary);
+    
+    &:hover {
+      background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+      color: var(--color-primary);
+    }
+  }
+
+  .theme-icon {
+    // Dark mode: hide moon, show sun with smooth transitions
+    &.moon-icon {
+      opacity: 0;
+      transform: rotate(-180deg) scale(0.5);
+    }
+    
+    &.sun-icon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+}
+
+// Global body styles now use CSS custom properties
+body {
+  background-color: var(--surface-background);
+  color: var(--text-primary);
+}
+
+// Navigation components using new color system
+.site-nav {
+  .nav-link,
+  .more-toggle,
+  .language-toggle,
+  .mobile-nav-link {
+    color: var(--text-primary);
+
+    &:hover {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+  }
+
+  .more-dropdown,
+  .language-dropdown,
+  .mobile-menu-dropdown {
+    background: var(--surface-elevated);
+    border-color: var(--border-primary);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--text-primary) 20%, transparent);
+  }
+
+  .mobile-nav-item {
+    border-bottom-color: var(--border-secondary);
+  }
+
+  .mobile-nav-link:hover,
+  .language-option:hover,
+  .dropdown-link:hover {
+    background-color: var(--surface-interactive);
+    color: var(--color-primary);
+  }
+}
+
+// Post content with accessible colors
+.post-content {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+
+    a:before {
+      color: var(--color-primary);
+    }
+  }
+
+  a {
+    color: var(--color-primary);
+    
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
+
+  blockquote {
+    border-left-color: var(--color-primary);
+    color: var(--text-secondary);
+  }
+
+  .danger {
+    background-color: var(--surface-elevated);
+    border-left-color: var(--color-danger);
+    color: var(--text-primary);
+
+    &:before {
+      background-color: var(--color-danger);
+    }
+  }
+}
+
+// Code highlighting with proper contrast
+figure.highlight {
+  background-color: var(--code-background);
+
+  figcaption {
+    background: var(--surface-interactive);
+    border-bottom-color: var(--border-primary);
+
+    .filename {
+      color: var(--text-tertiary);
+    }
+
+    .lang-name {
+      color: var(--text-secondary);
+    }
+
+    .actions button {
+      color: var(--text-secondary);
+      border-color: var(--border-primary);
+      background: transparent;
+
+      &:hover {
+        color: var(--color-primary);
+        background: var(--surface-interactive-hover);
+      }
+    }
+  }
+
+  .gutter {
+    background: var(--surface-interactive);
+    border-right-color: var(--border-primary);
+
+    pre {
+      background: var(--surface-interactive);
+      color: var(--text-tertiary);
+    }
+  }
+
+  .code {
+    background-color: var(--code-background);
+    color: var(--code-text);
+  }
+}
+
+// Components using accessible color tokens
+details {
+  background: var(--surface-elevated);
+  border-color: var(--border-primary);
+
+  summary:hover {
+    background: var(--surface-interactive);
+  }
+}
+
+.category-index .category-item a,
+.tag-index .tag-item a {
+  background-color: var(--surface-elevated);
+  color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--surface-interactive);
+    color: var(--text-primary);
+  }
+}
+
+.friend-link-card {
+  background: var(--surface-elevated);
+  
+  &__name {
+    color: var(--text-primary);
+  }
+
+  &__description {
+    color: var(--text-secondary);
+  }
+}
+
+footer .copyright {
+  border-top-color: var(--border-primary);
+
+  p, a {
+    color: var(--text-tertiary);
+  }
+
+  a:hover {
+    color: var(--text-secondary);
+  }
+}

@@ -1,0 +1,46 @@
+/**
+ * SVG Icon System Styles
+ * Performance-optimized inline SVG icons replacing Font Awesome
+ */
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  color: inherit;
+  vertical-align: middle;
+  flex-shrink: 0;
+  
+  // Ensure icons inherit color properly
+  * {
+    fill: currentColor;
+  }
+  
+  // Icon variants
+  &.icon-bars {
+    width: 1em;
+    height: 1em;
+  }
+  
+  &.icon-external-link {
+    width: 0.875em;
+    height: 0.875em;
+  }
+  
+  &.icon-globe {
+    width: 1em;
+    height: 1em;
+  }
+  
+  &.icon-chevron-down {
+    width: 0.75em;
+    height: 0.75em;
+  }
+  
+  &.icon-moon,
+  &.icon-sun {
+    width: 1rem;
+    height: 1rem;
+  }
+}

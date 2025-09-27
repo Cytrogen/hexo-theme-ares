@@ -1,0 +1,66 @@
+@use "../variables" as *;
+
+// Accessibility (a11y) styles
+// Skip to content link for keyboard navigation
+.skip-link {
+  // Robust visually-hidden pattern - completely invisible until focused
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  
+  // Make visible and accessible when focused
+  &:focus {
+    // Undo the visually-hidden properties
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    
+    // Visual styling for focused state
+    top: 6px;
+    left: 6px;
+    z-index: 10000;
+    background-color: var(--color-primary);
+    color: var(--text-inverse);
+    text-decoration: none;
+    font-size: var(--font-size-nav);
+    font-weight: 600;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    outline: 2px solid var(--text-inverse);
+    outline-offset: 2px;
+  }
+  
+  // Hover state only applies when focused (since it's otherwise invisible)
+  &:focus:hover {
+    background-color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
+  
+  // Ensure it works with both light and dark themes
+  [data-theme="dark"] &:focus {
+    background-color: var(--color-primary);
+    color: var(--text-inverse);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    outline-color: var(--surface-background);
+  }
+}
+
+// Ensure main content can receive focus programmatically
+#main-content {
+  outline: none; // Remove default focus outline since this is programmatic focus
+  
+  &:focus {
+    outline: none; // Keep it clean since user didn't manually focus this
+  }
+}

@@ -1,0 +1,89 @@
+@use "../variables" as *;
+
+.back-to-top {
+  position: fixed;
+  z-index: $z-index-overlay;
+  
+  // Mobile-first positioning (default): top-center
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  
+  // Hidden by default
+  opacity: 0;
+  visibility: hidden;
+  
+  // Styling
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 50%;
+  box-shadow: $card-shadow;
+  text-decoration: none;
+  
+  // Smooth transitions
+  transition: opacity 0.3s ease-in-out,
+              visibility 0.3s ease-in-out,
+              transform 0.3s ease-in-out,
+              background-color 0.2s ease-in-out,
+              box-shadow 0.2s ease-in-out;
+  
+  // Visible state
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  // Hover and focus states
+  &:hover,
+  &:focus {
+    background: var(--surface-interactive);
+    box-shadow: $card-shadow-hover;
+    
+    &.is-visible {
+      transform: translateX(-50%) translateY(-2px);
+    }
+  }
+  
+  &:focus {
+    outline: 2px solid var(--border-interactive);
+    outline-offset: 2px;
+  }
+  
+  // SVG icon styling
+  svg {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  &:hover svg {
+    transform: translateY(-1px);
+  }
+  
+  // Desktop positioning (≥700px): floating alongside content
+  @media (min-width: $breakpoint-desktop) {
+    top: auto;
+    bottom: 2rem;
+    left: auto;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    transform: translateY(20px);
+    
+    &.is-visible {
+      transform: translateY(0);
+    }
+    
+    &:hover,
+    &:focus {
+      &.is-visible {
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
