@@ -36,9 +36,6 @@ nav:
         key: rss
         path: /atom.xml
       - type: external
-        key: portfolio
-        path: https://portfolio.cytrogen.icu
-      - type: external
         key: github
         path: https://github.com/cytrogen
 
@@ -46,8 +43,7 @@ favicon: favicon.png
 logo: favicon.png
 
 # Comment
-# e.g disqus: claymcleod 
-# disqus: hallowdem
+# e.g disqus: claymcleod
 
 # Search Configuration (disabled by default)
 # To enable search, set enable to true and install hexo-generator-search:
@@ -62,23 +58,18 @@ search:
 
 # Analytics
 # ga: UA-xxxxxxxx-x
-ga: G-4PVPZXE0QQ
 
 # Copyright Infomation
-startyear: 2022
+startyear: 2025
 
 # Image Credits
 enable_image_credit: false
 
 # Friend Links
 friend_links:
-    - name: 芈渡
-      url: https://www.lllomh.com/
-      description: 资源分享，Vue、React、Node、RN、PHP代码，实用功能代码段，丰富的代码资源分享，靠谱的源码资料平台
-      lang: zh
 
 # FontAwesome
-fas: 0011a09a95
+fas:
 
 # hexo-generator-feed
 rss: /atom.xml
