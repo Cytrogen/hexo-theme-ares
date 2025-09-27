@@ -2,65 +2,388 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
-#search {
-  &-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 75%;
-    height: 50%;
-    padding: $large-spacing;
-    border: 3px solid $border-color;
-    background-color: $background-color;
-    z-index: $z-index-popup;
-    max-width: 600px;
+// ============================================================================
+// SEARCH BUTTON IN NAVIGATION
+// ============================================================================
 
-    input[type="text"] {
-      display: block;
-    }
+.search-toggle {
+  @include reset-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  margin: 0 4px;
+  border: 1px solid var(--border-primary);
+  border-radius: $border-radius;
+  background-color: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all $transition-duration $transition-timing;
+  
+  &:hover {
+    background-color: var(--surface-interactive);
+    border-color: var(--border-interactive);
+    color: var(--color-primary);
   }
-
-  &-panel {
-    @include flex(column);
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
-
-  &-icon {
-    cursor: pointer;
+  
+  &:active {
+    transform: translateY(1px);
   }
-}
-
-#local-search {
-  &-input {
-    width: 100%;
-    margin-bottom: $base-spacing;
-  }
-
-  &-result {
-    overflow-y: auto;
-    flex-grow: 1;
+  
+  .icon {
+    width: 16px;
+    height: 16px;
   }
 }
 
-.search {
-  &-result {
-    color: $text-secondary;
+// ============================================================================
+// MODERN HTML <DIALOG> ELEMENT STYLING
+// ============================================================================
+
+.search-dialog {
+  // Reset dialog default styles
+  border: none;
+  padding: 0;
+  margin: auto;
+  background: transparent;
+  outline: none;
+  max-width: min(90vw, 600px);
+  max-height: min(80vh, 600px);
+  
+  // Modern dialog styling
+  border-radius: calc($border-radius * 2);
+  box-shadow: var(--card-shadow-hover);
+  background-color: var(--surface-background);
+  border: 1px solid var(--border-primary);
+  overflow: hidden;
+  
+  // Smooth enter/exit animations
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  transition: 
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out,
+    overlay 0.2s ease-out allow-discrete,
+    display 0.2s ease-out allow-discrete;
     
-    &-list {
-      padding-left: 10px;
-    }
-
-    &-title {
-      font-weight: bold;
+  // Dialog open state
+  &[open] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  // Starting-style for smooth entry
+  @starting-style {
+    &[open] {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
     }
   }
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $large-spacing;
+    background-color: var(--surface-elevated);
+    border-bottom: 1px solid var(--border-primary);
+  }
+  
+  &__title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  
+  &__close {
+    @include reset-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: $border-radius;
+    background-color: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all $transition-duration $transition-timing;
+    
+    &:hover {
+      background-color: var(--surface-interactive);
+      color: var(--text-primary);
+    }
+    
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+    
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+  &__body {
+    padding: $large-spacing;
+    display: flex;
+    flex-direction: column;
+    gap: $base-spacing;
+    min-height: 300px;
+    max-height: 400px;
+  }
+  
+  &__description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  &__input-wrapper {
+    position: relative;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border-primary);
+    border-radius: $border-radius;
+    background-color: var(--surface-background);
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: $base-font-family;
+    transition: border-color $transition-duration $transition-timing;
+    
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    
+    &::placeholder {
+      color: var(--text-tertiary);
+    }
+    
+    // Remove search field styling in WebKit
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
+  }
+  
+  &__results {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
-  &-keyword {
-    border-bottom: 1px dashed $highlight-color;
-    font-weight: bold;
+// ============================================================================
+// DIALOG BACKDROP (::backdrop pseudo-element)
+// ============================================================================
+
+.search-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.search-dialog[open]::backdrop {
+  opacity: 1;
+}
+
+// ============================================================================
+// SEARCH RESULTS STYLING
+// ============================================================================
+
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--text-tertiary);
+    border-radius: 3px;
+  }
+  
+  &__empty,
+  &__loading {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: $large-spacing;
+    font-style: italic;
+  }
+  
+  &__loading {
+    position: relative;
+    
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+      border: 2px solid var(--text-tertiary);
+      border-radius: 50%;
+      border-top-color: var(--color-primary);
+      animation: search-loading 1s linear infinite;
+    }
+  }
+  
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $small-spacing;
+  }
+}
+
+// Search result items
+.search-result-item {
+  padding: $base-spacing;
+  border-radius: $border-radius;
+  border: 1px solid transparent;
+  transition: all $transition-duration $transition-timing;
+  
+  &:hover {
+    background-color: var(--surface-elevated);
+    border-color: var(--border-secondary);
+  }
+  
+  &__title {
+    margin: 0 0 $small-spacing 0;
+    font-size: 1rem;
+    font-weight: 600;
+    
+    a {
+      color: var(--text-primary);
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+  }
+  
+  &__excerpt {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  &__meta {
+    margin-top: $small-spacing;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+  }
+}
+
+// Highlight matched search terms
+.search-keyword {
+  background-color: var(--color-accent);
+  color: var(--text-inverse);
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+// ============================================================================
+// RESPONSIVE DESIGN
+// ============================================================================
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .search-dialog {
+    max-width: 95vw;
+    max-height: 85vh;
+    
+    &__header {
+      padding: $base-spacing;
+    }
+    
+    &__body {
+      padding: $base-spacing;
+      min-height: 250px;
+    }
+    
+    &__title {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .search-toggle {
+    margin: 0 2px;
+    padding: 6px;
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes search-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================================================
+// ACCESSIBILITY IMPROVEMENTS
+// ============================================================================
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .search-dialog {
+    border-width: 2px;
+  }
+  
+  .search-dialog__input {
+    border-width: 3px;
+  }
+  
+  .search-keyword {
+    outline: 2px solid var(--text-primary);
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .search-dialog {
+    transition: opacity 0.1s ease-out;
+    
+    &[open] {
+      transform: none;
+    }
+    
+    @starting-style {
+      &[open] {
+        transform: none;
+      }
+    }
+  }
+  
+  .search-dialog::backdrop {
+    transition: opacity 0.1s ease-out;
+  }
+  
+  .search-results__loading::after {
+    animation: none;
   }
 }

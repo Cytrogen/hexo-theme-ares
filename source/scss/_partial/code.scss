@@ -1,11 +1,10 @@
-@use "sass:color";
 @use "../variables" as *;
 
 figure.highlight {
   position: relative;
   margin: 1em 0;
   border-radius: $border-radius;
-  background-color: $light-gray;
+  background-color: var(--code-background);
 
   figcaption {
     position: sticky;
@@ -14,8 +13,8 @@ figure.highlight {
     display: flex;
     align-items: center;
     padding: 0.5em 1em;
-    background: color.adjust($light-gray, $lightness: -3%);
-    border-bottom: 1px solid color.adjust($light-gray, $lightness: -10%);
+    background: var(--surface-interactive);
+    border-bottom: 1px solid var(--border-primary);
     gap: 1em;
     
     .info {
@@ -26,18 +25,18 @@ figure.highlight {
       
       .filename {
         font-family: $code-font-family;
-        font-size: $code-font-size;
-        color: color.adjust($light-gray, $lightness: -40%);
+        font-size: var(--font-size-code);
+        color: var(--text-tertiary);
       }
       
       .lang-name {
-        color: color.adjust($light-gray, $lightness: -30%);
-        font-size: $code-font-size;
+        color: var(--text-secondary);
+        font-size: var(--font-size-code);
         text-transform: uppercase;
       }
 
       .source-link {
-        color: color.adjust($light-gray, $lightness: -40%);
+        color: var(--text-tertiary);
         text-decoration: none;
         
         &:hover {
@@ -53,17 +52,17 @@ figure.highlight {
       
       button {
         padding: 0.3em 0.6em;
-        font-size: $code-font-size;
-        color: color.adjust($light-gray, $lightness: -30%);
+        font-size: var(--font-size-code);
+        color: var(--text-secondary);
         background: transparent;
-        border: 1px solid color.adjust($light-gray, $lightness: -10%);
+        border: 1px solid var(--border-primary);
         border-radius: 3px;
         cursor: pointer;
         transition: all 0.2s ease;
         
         &:hover {
           color: $primary-color;
-          background: color.adjust($light-gray, $lightness: -8%);
+          background: var(--surface-interactive-hover);
         }
         
         &.copied {
@@ -103,13 +102,13 @@ figure.highlight {
     left: 0;
     z-index: 1;
     width: 40px;
-    background: color.adjust($light-gray, $lightness: -3%);
-    border-right: 1px solid color.adjust($light-gray, $lightness: -10%);
+    background: var(--surface-interactive);
+    border-right: 1px solid var(--border-primary);
     
     pre {
       text-align: right;
-      background: color.adjust($light-gray, $lightness: -3%);
-      color: color.adjust($light-gray, $lightness: -30%);
+      background: var(--surface-interactive);
+      color: var(--text-tertiary);
     }
     
     &.no-line-number {
@@ -119,10 +118,10 @@ figure.highlight {
 
   .code {
     position: relative;
-    background-color: #f8f8f8;
+    background-color: var(--code-background);
     
     pre .line.marked {
-      background-color: color.adjust($primary-color, $alpha: -0.9);
+      background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
     }
   }
 

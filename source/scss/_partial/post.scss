@@ -8,7 +8,7 @@
       .post-title {
         margin: 0.65em 0;
         color: $heading-color;
-        font-size: $h2-font-size;
+        font-size: var(--font-size-h1);
 
         a {
           color: $heading-color;
@@ -41,11 +41,11 @@
       }
   
       h2, h3 {
-        font-size: 22px;
+        font-size: var(--font-size-h2-h3);
       }
   
       h4, h5, h6 {
-        font-size: 18px;
+        font-size: var(--font-size-h4-h6);
       }
   
       h2, h3, h4, h5, h6 {
@@ -69,6 +69,14 @@
       a {
         color: $link-color;
         word-break: break-all;
+        text-decoration: underline;
+        text-decoration-skip-ink: auto;
+        text-decoration-color: color-mix(in srgb, var(--color-primary) 60%, transparent);
+        transition: text-decoration-color 0.2s ease-in-out;
+
+        &:hover {
+          text-decoration-color: var(--color-primary);
+        }
       }
   
       blockquote {

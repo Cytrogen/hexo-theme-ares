@@ -1,12 +1,11 @@
-@use "sass:color";
 @use "../variables" as *;
 
 details {
     margin: 1em 0;
     padding: 1em;
-    background: $light-gray;
+    background: var(--surface-elevated);
     border-radius: $border-radius;
-    border: 1px solid color.adjust($light-gray, $lightness: -10%);
+    border: 1px solid var(--border-primary);
   
     summary {
       cursor: pointer;
@@ -15,7 +14,7 @@ details {
       border-radius: $border-radius;
       
       &:hover {
-        background: color.adjust($light-gray, $lightness: -5%);
+        background: var(--surface-interactive);
       }
       
       &::-webkit-details-marker {
