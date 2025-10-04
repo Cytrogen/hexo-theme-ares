@@ -8,7 +8,7 @@ block container
             if page.content
                 .friend-links__content!= page.content
 
-            - var matchedLinks = theme.friend_links.filter(link => link.lang === page.lang)
+            - var matchedLinks = theme.friend_links ? theme.friend_links.filter(link => link.lang === page.lang) : []
             if matchedLinks.length > 0
                 .friend-links__grid
                     each link in matchedLinks
