@@ -1,4 +1,5 @@
 include icons
+include social-utils
 
 mixin nav-link(item)
     if item.type === 'internal'
@@ -7,7 +8,8 @@ mixin nav-link(item)
         a.nav-link(class={active: act} href=url_for(fullPath))
             != __(`menu.${item.key}`)
     else if item.type === 'external'
-        a.nav-link(href=item.path target="_blank" rel="noopener noreferrer")
+        - var relAttr = "noopener noreferrer" + (isSocialMediaUrl(item.path) ? " me" : "")
+        a.nav-link(href=item.path target="_blank" rel=relAttr)
             != __(`menu.${item.key}`)
             +icon-external-link()
 
@@ -57,7 +59,8 @@ mixin more-menu()
                         if item.type === 'internal'
                             +nav-link(item)
                         else if item.type === 'external'
-                            a.dropdown-link(href=item.path target="_blank" rel="noopener noreferrer")
+                            - var relAttr = "noopener noreferrer" + (isSocialMediaUrl(item.path) ? " me" : "")
+                            a.dropdown-link(href=item.path target="_blank" rel=relAttr)
                                 != __(`menu.${item.key}`)
                                 +icon-external-link()
 

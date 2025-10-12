@@ -15,29 +15,24 @@ if ga
 //- Snippet B: Main Body Script - Theme Switcher Logic
 script.
   (function() {
-    // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
       const themeToggle = document.querySelector('.theme-toggle');
       
       if (!themeToggle) return;
       
-      // Get current theme
       const getCurrentTheme = () => {
         return document.documentElement.getAttribute('data-theme') || 'light';
       };
       
-      // Update UI to match current theme
       const updateUI = (theme) => {
         const isDark = theme === 'dark';
         themeToggle.setAttribute('aria-pressed', isDark.toString());
       };
       
-      // Simplified theme setter - CSS handles all animations
       const setTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.style.colorScheme = theme; // Update native UI elements
+        document.documentElement.style.colorScheme = theme;
         
-        // Also update page-wrapper for animation support
         const pageWrapper = document.getElementById('page-wrapper');
         if (pageWrapper) {
           pageWrapper.setAttribute('data-theme', theme);
@@ -54,24 +49,19 @@ script.
         updateUI(theme);
       };
       
-      // Simple theme toggle - letting CSS handle the smooth transitions
       const toggleTheme = () => {
         const current = getCurrentTheme();
         const newTheme = current === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
       };
       
-      // Initialize UI on page load
       updateUI(getCurrentTheme());
       
-      // Add click event listener
       themeToggle.addEventListener('click', toggleTheme);
       
-      // Listen for system theme changes
       if (window.matchMedia) {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         mediaQuery.addEventListener('change', function(e) {
-          // Only update if no manual preference is saved
           if (!localStorage.getItem('theme')) {
             const theme = e.matches ? 'dark' : 'light';
             setTheme(theme);
@@ -93,44 +83,36 @@ if theme.search && theme.search.enable
         
         if (!searchToggle || !searchDialog) return;
         
-        // Open dialog when search button is clicked
         searchToggle.addEventListener('click', function() {
           searchDialog.showModal();
-          // Focus the input after a brief delay to ensure dialog is fully opened
           setTimeout(() => {
             if (searchInput) searchInput.focus();
           }, 100);
         });
         
-        // Close dialog when close button is clicked
         if (searchCloseBtn) {
           searchCloseBtn.addEventListener('click', function() {
             searchDialog.close();
           });
         }
         
-        // Close dialog when clicking backdrop (outside dialog content)
         searchDialog.addEventListener('click', function(event) {
           if (event.target === searchDialog) {
             searchDialog.close();
           }
         });
         
-        // Close dialog on Escape key
         searchDialog.addEventListener('keydown', function(event) {
           if (event.key === 'Escape') {
             searchDialog.close();
           }
         });
         
-        // Clear search input when dialog closes
         searchDialog.addEventListener('close', function() {
           if (searchInput) {
             searchInput.value = '';
-            // Clear search results
             const searchResults = document.querySelector('#search-results .search-results__list');
             if (searchResults) searchResults.innerHTML = '';
-            // Hide loading/empty states
             const loading = document.querySelector('.search-results__loading');
             const empty = document.querySelector('.search-results__empty');
             if (loading) loading.hidden = true;
@@ -151,10 +133,9 @@ script.
       
       if (!backToTopBtn) return;
       
-      // Show/hide button based on scroll position
       const toggleButtonVisibility = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const shouldShow = scrollTop > 200; // Show after scrolling 200px
+        const shouldShow = scrollTop > 200;
         
         if (shouldShow) {
           backToTopBtn.classList.add('is-visible');
@@ -163,7 +144,6 @@ script.
         }
       };
       
-      // Throttle scroll events for better performance
       let ticking = false;
       const handleScroll = () => {
         if (!ticking) {
@@ -175,7 +155,6 @@ script.
         }
       };
       
-      // Smooth scroll to top when clicked
       const scrollToTop = (event) => {
         event.preventDefault();
         window.scrollTo({
@@ -184,11 +163,10 @@ script.
         });
       };
       
-      // Add event listeners
       window.addEventListener('scroll', handleScroll);
       backToTopBtn.addEventListener('click', scrollToTop);
       
-      // Check initial scroll position
       toggleButtonVisibility();
     });
   })();
+

@@ -1,0 +1,21 @@
+//- Helper function to check if URL is a social media platform
+-
+    function isSocialMediaUrl(url) {
+        if (!url) return false;
+        const socialDomains = [
+            'github.com', 'gitlab.com', 'bitbucket.org',
+            'twitter.com', 'x.com', 'mastodon.social', 'mastodon.online',
+            'linkedin.com', 'facebook.com', 'instagram.com',
+            'weibo.com', 'zhihu.com', 'bilibili.com',
+            'youtube.com', 'youtu.be', 'tiktok.com',
+            'discord.gg', 'telegram.me', 't.me'
+        ];
+        try {
+            const domain = new URL(url).hostname.toLowerCase();
+            return socialDomains.some(socialDomain => 
+                domain === socialDomain || domain.endsWith('.' + socialDomain)
+            );
+        } catch {
+            return false;
+        }
+    }

@@ -32,6 +32,10 @@ block description
 
 link(rel="icon", href=url_for(theme.favicon))
 
+//- Webmention
+if theme.webmention && theme.webmention.domain
+    link(rel="webmention", href=`https://webmention.io/${theme.webmention.domain}/webmention`)
+
 link(rel="preload", href=url_for("fonts/opensans-regular-latin.woff2"), as="font", type="font/woff2", crossorigin="anonymous")
 
 style.

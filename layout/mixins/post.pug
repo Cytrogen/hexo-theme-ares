@@ -1,6 +1,7 @@
 mixin postInfo(item)
     .post-info
-        != full_date(item.date, 'l')
+        time.post-date.dt-published(datetime=date_xml(item.date))
+            != full_date(item.date, 'l')
         if item.from && (is_home() || is_post())
             a.post-from(href=item.from target="_blank" title=item.from)!= __('translated')
 
@@ -49,9 +50,39 @@ mixin postList()
 
 mixin post(item)
     .post
-        article.post-block
-            h1.post-title
-                != item.title
-            +postInfo(item)
-            .post-content
-                != item.content
+        if item.entry === true
+            article.post-block.h-entry
+                .post-meta.p-author.h-card(style="display: none;")
+                    img.author-avatar.u-photo(src=url_for(theme.logo), alt=config.author)
+                    a.author-name.p-name.u-url(href=config.url)= config.author
+                
+                a.post-permalink.u-url(href=full_url_for(item.path), style="display: none;") 永久链接
+                
+                if item.excerpt
+                    .p-summary(style="display: none;")
+                        != item.excerpt
+                
+                h1.post-title.p-name
+                    != item.title
+                +postInfo(item)
+                
+                if item.in_reply_to
+                    .post-reply
+                        != __('reply_to') + ': '
+                        a.u-in-reply-to(href=item.in_reply_to)= item.in_reply_to
+                
+                .post-content.e-content
+                    != item.content
+        else
+            article.post-block
+                h1.post-title
+                    != item.title
+                +postInfo(item)
+                
+                if item.in_reply_to
+                    .post-reply
+                        != __('reply_to') + ': '
+                        a.u-in-reply-to(href=item.in_reply_to)= item.in_reply_to
+                
+                .post-content
+                    != item.content

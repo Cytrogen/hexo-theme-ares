@@ -38,6 +38,9 @@ nav:
       - type: external
         key: github
         path: https://github.com/cytrogen
+      - type: external
+        key: portfolio
+        path: https://portfolio.cytrogen.icu
 
 favicon: favicon.png
 logo: favicon.png
@@ -67,9 +70,22 @@ enable_image_credit: false
 
 # Friend Links
 friend_links:
+  # - name:
+  #   url:
+  #   description:
+  #   lang: 
+  - name: 芈渡
+    url: https://www.lllomh.com/
+    description: 资源分享，Vue、React、Node、RN、PHP代码，实用功能代码段，丰富的代码资源分享，靠谱的源码资料平台
+    lang: zh
 
 # FontAwesome
 fas:
 
 # hexo-generator-feed
 rss: /atom.xml
+
+# Webmention
+webmention:
+  # domain:
+  domain: cytrogen.icu
