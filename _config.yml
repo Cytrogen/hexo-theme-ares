@@ -73,3 +73,7 @@ fas:
 
 # hexo-generator-feed
 rss: /atom.xml
+
+# Webmention
+webmention:
+  # domain: your-domain.com
