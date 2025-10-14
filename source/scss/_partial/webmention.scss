@@ -41,6 +41,7 @@
   .webmention-author {
     display: flex;
     align-items: center;
+    justify-content: flex-start; // 确保左对齐
     margin-bottom: 0.5em;
     font-size: 0.9em;
     color: var(--text-secondary);
@@ -50,7 +51,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    margin-right: 8px;
+    margin: 0 8px 0 0;
     background: var(--surface-interactive);
     object-fit: cover;
   }
