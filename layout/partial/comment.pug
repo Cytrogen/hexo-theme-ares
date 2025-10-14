@@ -1,3 +1,6 @@
+if config.webmention && config.webmention.enable
+    != render_webmentions()
+
 if theme.disqus
     #disqus_thread
     script.

@@ -1,5 +1,6 @@
 include mixins/nav
 include mixins/icons
+include mixins/social-utils
 
 nav.site-nav
     .nav-main
@@ -20,12 +21,10 @@ nav.site-nav
                 .more-menu.hidden-mobile
                     +more-menu()
                 
-                //- 搜索按钮 (条件渲染)
                 if theme.search && theme.search.enable
                     button.search-toggle(type="button", aria-label=__('nav.search'), title=__('nav.search'))
                         +icon-search()
                 
-                //- 主题切换按钮
                 +theme-switcher()
                 
                 details.mobile-menu-details.hidden-desktop
@@ -42,7 +41,8 @@ nav.site-nav
                                         a.mobile-nav-link(href=url_for(fullPath))
                                             != __(`menu.${item.key}`)
                                     else if item.type === 'external'
-                                        a.mobile-nav-link(href=item.path target="_blank" rel="noopener noreferrer")
+                                        - var relAttr = "noopener noreferrer" + (isSocialMediaUrl(item.path) ? " me" : "")
+                                        a.mobile-nav-link(href=item.path target="_blank" rel=relAttr)
                                             != __(`menu.${item.key}`)
                                             +icon-external-link()
         
