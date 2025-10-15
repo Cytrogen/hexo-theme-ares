@@ -32,6 +32,8 @@ block description
 
 link(rel="icon", href=url_for(theme.favicon))
 
+link(rel="canonical", href=page.permalink)
+
 //- Webmention
 if theme.webmention && theme.webmention.domain
     link(rel="webmention", href=`https://webmention.io/${theme.webmention.domain}/webmention`)
@@ -53,6 +55,10 @@ style.
   }
 
 link(rel="stylesheet", href=url_for("css/ares.css"))
+
+//- 条件加载webmention动态脚本
+if config.webmention && config.webmention.enable && config.webmention.mode && config.webmention.mode !== 'static'
+    script(src=url_for("js/webmention-dynamic.js"), defer)
 
 script(data-netlify-skip-bundle="true").
   (function() {

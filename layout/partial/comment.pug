@@ -14,4 +14,4 @@ if theme.disqus
 
 // Webmention 显示区域
 if config.webmention && config.webmention.enable
-    != render_webmentions()
+    != render_webmentions(page.path)
