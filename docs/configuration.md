@@ -11,6 +11,7 @@
   - [友情链接](#友情链接)
   - [Google Analytics](#google-analytics)
   - [本地搜索](#本地搜索)
+  - [Webmention](#webmention)
 
 > 首先你要清楚，Hexo 的配置文件有**两个**：
 > 
