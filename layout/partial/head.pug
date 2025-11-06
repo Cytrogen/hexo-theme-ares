@@ -58,6 +58,7 @@ link(rel="stylesheet", href=url_for("css/ares.css"))
 
 //- 条件加载webmention动态脚本
 if config.webmention && config.webmention.enable && config.webmention.mode && config.webmention.mode !== 'static'
+    script(src=url_for("js/purify.min.js"), defer)
     script(src=url_for("js/webmention-dynamic.js"), defer)
 
 script(data-netlify-skip-bundle="true").
